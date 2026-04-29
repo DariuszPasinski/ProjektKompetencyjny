@@ -1,0 +1,11 @@
+#calendar {
+    columns: 2;
+}
+
+#calendar-main {
+    width: 70%;
+}
+
+#calendar-legend {
+    width: 30%;
+}

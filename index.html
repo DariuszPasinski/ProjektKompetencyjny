@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Kalendarz Akademicki Politechniki Łódzkiej</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/11-resources/01-css/style.css">
+    <link rel="stylesheet" href="/01-pages/00-00-index/01-css/calendar.css">
+    <link rel="icon" href="/11-resources/02-image/Favico.jpg">
+    <script type="text/javascript" src="/01-pages/00-00-index/05-js/index.js"></script>
+</head>
+<body>
+    <header>
+        <section>
+            <img src="/11-resources/02-image/Favico.jpg">
+        </section>
+        <section>
+            <button id="login-button">login</button>
+        </section>
+    </header>
+    <main>
+        <nav>
+            <button id="prev-month-button">&larrb;</button>
+            <p id="current-date-paragraph"></p>
+            <button id="next-month-button">&rarrb;</button>
+        </nav>
+        <section id="calendar">
+            <section id="calendar-main">
+                <table>
+                    <tr>
+                        <th>Pon</th>
+                        <th>Wt</th>
+                        <th>Śr</th>
+                        <th>Czw</th>
+                        <th>Pt</th>
+                        <th>Sob</th>
+                        <th>Nd</th>
+                    </tr>
+
+                </table>
+            </section>
+            <section id="calendar-legend">
+
+            </section>
+        </section>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => start());
+        document.getElementById("login-button").addEventListener("click", function() {
+            window.location = "login.html";
+        });
+        document.getElementById("next-month-button").addEventListener("click", () => nextMonth());
+        document.getElementById("prev-month-button").addEventListener("click", () => prevMonth());
+    </script>
+</body>
+</html>
