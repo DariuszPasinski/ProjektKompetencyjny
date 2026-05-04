@@ -1,20 +1,113 @@
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+
+const tableHTML = [
+    "<tr><th>Pon</th><th>Wt</th><th>Śr</th><th>Czw</th><th>Pt</th><th>Sob</th><th>Nd</th></tr>"
+]
 
 function start() {
-    const d = new Date();
-    let month = months[d.getMonth()];
-    let year = d.getFullYear();
-
+    let lastDate = getCookie("lastDate");
+    let month = "", year = "";
+    //TODO: CZYTANIE NIE DZIAŁA
+    //if (lastDate == "") {
+        let d = getCurrentDate();
+        month = d[0];
+        year = d[1];
+    //} else {
+    //    let d = lastDate.split("-");
+    //    month = d[1];
+    //    year = d[2];
+    //}
+    console.log(month + " " + year);
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
     //TODO: Add making table from month
     //TODO: Add geting info from database
+    makeCallendar(month);
     return;
+}
+
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+function getCurrentDate() {
+    const d = new Date();
+    let month = months[d.getMonth()];
+    let year = d.getFullYear();
+    return [month, year];
+}
+
+function makeCallendar(month) {
+    let table = "";
+    document.getElementsByTagName("thead")[0].innerHTML = tableHTML[0];
+
+    let fragmented = getCallendarDate();
+    let startDate = getMonthStartDate(fragmented[0], fragmented[1]);
+    let endDate = getMonthEndDate(fragmented[0], fragmented[1]);
+
+    let i = 0;
+    console.log("StartDate:" + startDate + "\n EndDate:" + endDate);
+    while (true && i < 60) {
+        //console.log("StartDate:" + startDate.getFullYear() + "\n EndDate:" + endDate.getFullYear())
+        //TODO: Nie działa przez autocomplete
+        //console.log(startDate.getDay() == 1);
+        if (startDate.getDay() == 1) {
+            table += "<tr>";
+        }
+
+        let day = startDate.getDate();
+        //console.log(day);
+        if (months[startDate.getMonth()] == month) {
+            table += "<td class=\"tile-calendar-active\" id=\"" + day + "\"><p>" + day + "</p></td>";
+        } else {
+            table += "<td class=\"tile-calendar-inactive\" id=\"" + day + "\"><p>" + day + "</p></td>";
+        }
+
+        if (startDate.getDay() == 0) {
+            table += "</tr>";
+        }
+
+        if (startDate.getDate() == endDate.getDate() && startDate.getMonth() == endDate.getMonth()) {
+            break;
+        }
+        startDate = startDate.addDays(1);
+        i++;
+    }
+    document.getElementsByTagName("tbody")[0].innerHTML = table;
+}
+
+function getMonthStartDate(month, year) {
+    let startDate = new Date("1-" + month + "-" + year); 
+    let i = 0;
+    while (startDate.getDay() != 1 && i < 30) {
+        startDate = startDate.addDays(-1);
+        i++;
+    }
+    return startDate;
+}
+
+function getMonthEndDate(month, year) {
+    //TODO: DONT WORK YET
+    let endDate = new Date("1-" + month + "-" + year);
+    let i = 0;
+    while (endDate.getMonth() != endDate.addDays(1) && i < 30) {
+        endDate = endDate.addDays(1);
+        i++;
+    }
+    return endDate;
+}
+
+function getCallendarDate() {
+    let current = document.getElementById("current-date-paragraph").innerText;
+    let fragmented = current.split(" ");
+    return fragmented;
 }
 
 function prevMonth() {
     console.log("prevMonth() started");
-    let current = document.getElementById("current-date-paragraph").innerText;
-    let fragmented = current.split(" ");
+    let fragmented = getCallendarDate();
     console.log(fragmented);
 
     let index = (months.indexOf(fragmented[0]) - 1) % 12;
@@ -28,18 +121,19 @@ function prevMonth() {
     } else {
         year = fragmented[1];
     }
-    console.log(month + " " + year);
+    //console.log(month + " " + year);
 
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
-    console.log("prevMonth() ended");
+    setCookie("lastDate", month + "-" + year);
+    //console.log("prevMonth() ended");
+    makeCallendar(month);
     return;
 }
 
 function nextMonth() {
-    console.log("nextMonth() started");
-    let current = document.getElementById("current-date-paragraph").innerText;
-    let fragmented = current.split(" ");
-    console.log(fragmented);
+    //console.log("nextMonth() started");
+    let fragmented = getCallendarDate();
+    //console.log(fragmented);
 
     let month = months[(months.indexOf(fragmented[0]) + 1) % 12];
     let year = -1;
@@ -48,9 +142,34 @@ function nextMonth() {
     } else {
         year = fragmented[1];
     }
-    console.log(month + " " + year);
+    //console.log(month + " " + year);
 
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
-    console.log("nextMonth() ended");
+    setCookie("lastDate", month + "-" + year);
+    //console.log("nextMonth() ended");
+    makeCallendar(month);
     return;
+}
+
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }   
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
