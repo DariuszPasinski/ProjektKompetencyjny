@@ -6,18 +6,10 @@ const tableHTML = [
 ]
 
 function start() {
-    let lastDate = getCookie("lastDate");
     let month = "", year = "";
-    //TODO: CZYTANIE NIE DZIAŁA
-    //if (lastDate == "") {
-        let d = getCurrentDate();
-        month = d[0];
-        year = d[1];
-    //} else {
-    //    let d = lastDate.split("-");
-    //    month = d[1];
-    //    year = d[2];
-    //}
+    let d = getCurrentDate();
+    month = d[0];
+    year = d[1];
     console.log(month + " " + year);
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
     //TODO: Add making table from month
@@ -51,7 +43,6 @@ function makeCallendar(month) {
     console.log("StartDate:" + startDate + "\n EndDate:" + endDate);
     while (true && i < 60) {
         //console.log("StartDate:" + startDate.getFullYear() + "\n EndDate:" + endDate.getFullYear())
-        //TODO: Nie działa przez autocomplete
         //console.log(startDate.getDay() == 1);
         if (startDate.getDay() == 1) {
             table += "<tr>";
@@ -124,7 +115,6 @@ function prevMonth() {
     //console.log(month + " " + year);
 
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
-    setCookie("lastDate", month + "-" + year);
     //console.log("prevMonth() ended");
     makeCallendar(month);
     return;
@@ -145,7 +135,6 @@ function nextMonth() {
     //console.log(month + " " + year);
 
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
-    setCookie("lastDate", month + "-" + year);
     //console.log("nextMonth() ended");
     makeCallendar(month);
     return;
