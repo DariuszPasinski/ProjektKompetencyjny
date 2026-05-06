@@ -39,17 +39,12 @@ function makeCallendar(month) {
     let startDate = getMonthStartDate(fragmented[0], fragmented[1]);
     let endDate = getMonthEndDate(fragmented[0], fragmented[1]);
 
-    let i = 0;
-    console.log("StartDate:" + startDate + "\n EndDate:" + endDate);
-    while (true && i < 60) {
-        //console.log("StartDate:" + startDate.getFullYear() + "\n EndDate:" + endDate.getFullYear())
-        //console.log(startDate.getDay() == 1);
+    while (true) {
         if (startDate.getDay() == 1) {
             table += "<tr>";
         }
 
         let day = startDate.getDate();
-        //console.log(day);
         if (months[startDate.getMonth()] == month) {
             table += "<td class=\"tile-calendar-active\" id=\"" + day + "\"><p>" + day + "</p></td>";
         } else {
@@ -64,28 +59,26 @@ function makeCallendar(month) {
             break;
         }
         startDate = startDate.addDays(1);
-        i++;
     }
     document.getElementsByTagName("tbody")[0].innerHTML = table;
 }
 
 function getMonthStartDate(month, year) {
     let startDate = new Date("1-" + month + "-" + year); 
-    let i = 0;
-    while (startDate.getDay() != 1 && i < 30) {
+    while (startDate.getDay() != 1) {
         startDate = startDate.addDays(-1);
-        i++;
     }
     return startDate;
 }
 
 function getMonthEndDate(month, year) {
-    //TODO: DONT WORK YET
-    let endDate = new Date("1-" + month + "-" + year);
-    let i = 0;
-    while (endDate.getMonth() != endDate.addDays(1) && i < 30) {
+    let endDate = new Date("27-" + month + "-" + year);
+    let newMonth = false;
+    while (!(endDate.getDay() == 0 && newMonth == true)) {
         endDate = endDate.addDays(1);
-        i++;
+        if (endDate.addDays(1).getMonth() != endDate.getMonth()) {
+            newMonth = true;
+        }
     }
     return endDate;
 }
