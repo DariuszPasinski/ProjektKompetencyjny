@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Kalendarz Akademicki Politechniki Łódzkiej</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/11-resources/01-css/style.css">
+    <link rel="stylesheet" href="/01-pages/00-00-index/01-css/calendar.css">
+    <link rel="icon" href="/11-resources/02-image/Favico.jpg">
+    <script src="01-pages/00-00-index/05-js/auth.js"></script>
+</head>
+<body>
+    <header class="app-header">
+        <span class="lang-indicator">[PL]</span>
+    </header>
+
+    <main>
+        <section class="login-card">
+            <div class="login-card">
+            <h2 class="login-title">zaloguj się do konta redaktora</h2>
+            <form id="login-form" class="login-form" novalidate>
+                <input
+                    type="text"
+                    id="login-input"
+                    class="form-input"
+                    placeholder="login"
+                    autocomplete="username"
+                />
+                <input
+                    type="password"
+                    id="password-input"
+                    class="form-input"
+                    placeholder="hasło"
+                    autocomplete="current-password"
+                />
+                <div class="login-buttons">
+                    <button type="submit" class="btn-primary" id="btn-submit">zaloguj się</button>
+                    <button type="button" class="btn-secondary" id="cancel-button">Anuluj</button>
+                </div>
+                <div class="login-error" id="login-error" hidden>
+                    Nieprawidłowy login lub hasło
+                </div>
+            </form>
+        </div>
+    </main>
+    <script>
+        // Jeśli już zalogowany — wróć od razu
+        if (Auth.isLoggedIn()) {
+            window.location = "index.html";
+        }
+
+        document.getElementById("cancel-button").addEventListener("click", function () {
+            window.location = "index.html";
+        });
+
+        document.getElementById("login-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const login = document.getElementById("login-input").value.trim();
+            const haslo = document.getElementById("password-input").value;
+            const errorEl = document.getElementById("login-error");
+            const submitBtn = document.getElementById("btn-submit");
+
+            errorEl.hidden = true;
+            submitBtn.disabled = true;
+            submitBtn.textContent = "...";
+
+            const ok = await Auth.login(login, haslo);
+
+            if (ok) {
+                window.location = "index.html";
+            } else {
+                errorEl.hidden = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = "zaloguj się";
+            }
+        });
+    </script>
+</body>
+</html>

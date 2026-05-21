@@ -3,42 +3,159 @@
 <head>
     <title>Kalendarz Akademicki Politechniki Łódzkiej</title>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="/11-resources/01-css/style.css">
-    <link rel="stylesheet" href="/01-pages/00-00-index/01-css/calendar.css">
-    <link rel="icon" href="/11-resources/02-image/Favico.jpg">
-    <script type="text/javascript" src="/01-pages/00-00-index/05-js/index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="11-resources/01-css/style.css">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css">
+    <link rel="icon" href="11-resources/02-image/Favico.jpg">
+    <!-- Kolejność ważna: db → auth → index → editor -->
+    <script src="01-pages/00-00-index/05-js/db.js"></script>
+    <script src="01-pages/00-00-index/05-js/auth.js"></script>
+    <script src="01-pages/00-00-index/05-js/index.js"></script>
+    <script src="01-pages/00-00-index/05-js/editor.js"></script>
 </head>
 <body>
-    <header>
-        <section>
-            <img src="/11-resources/02-image/Favico.jpg">
-        </section>
-        <section>
-            <button id="login-button">login</button>
-        </section>
+    <header class="app-header">
+        <span class="lang-indicator">[PL]</span>
+        <div class="header-filters">
+            <span class="filters-label">Filtry:</span>
+            <button class="tab-btn tab-btn--active" id="tab-calendar">Kalendarz</button>
+            <button class="tab-btn" id="tab-events">Wydarzenia</button>
+            <button class="tab-btn" id="tab-edit" hidden>Edytuj</button>
+        </div>
+        <div class="header-actions">
+            <span class="editor-badge" id="editor-badge" hidden>REDAKTOR</span>
+            <button class="btn-login" id="login-button">login</button>
+        </div>
     </header>
-    <main>
-        <nav>
-            <button id="prev-month-button">&larrb;</button>
-            <p id="current-date-paragraph"></p>
-            <button id="next-month-button">&rarrb;</button>
-        </nav>
-        <section id="calendar">
-            <section id="calendar-main">
-                <table>
-                    <thead></thead>
-                    <tbody></tbody>
-                </table>
-            </section>
-            <section id="calendar-legend">
 
+    <main>
+        <div class="calendar-wrapper">
+            <nav class="month-nav">
+                <button class="btn-nav" id="prev-month-button">&#8592;</button>
+                <p id="current-date-paragraph"></p>
+                <button class="btn-nav" id="next-month-button">&#8594;</button>
+            </nav>
+
+            <section id="calendar">
+                <!-- Siatka kalendarza -->
+                <section id="calendar-main">
+                    <table>
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+
+                <!-- Legenda (widok widza) -->
+                <section id="calendar-legend">
+                    <h3 class="legend-title">LEGENDA</h3>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--rektorskie"></span>godziny rektorskie
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--dziekanskie"></span>godziny dziekańskie
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--egzamin"></span>egzamin
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--kolokwium"></span>kolokwium
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--imprezy"></span>imprezy studenckie
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--inne"></span>inne ciekawe wydarzenia
+                    </div>
+                </section>
+
+                <!-- Panel redaktora (tryb Edytuj) — domyślnie ukryty -->
+                <aside id="editor-panel" class="editor-panel" hidden>
+                    <div class="editor-panel__title" id="editor-date-title">Wybierz datę ↑</div>
+
+                    <ul class="event-list" id="event-list"></ul>
+
+                    <form class="event-form" id="event-form" hidden novalidate>
+                        <!-- Krok 1: siatka kategorii -->
+                        <div class="form-kat-grid" id="form-kat-grid">
+                            <button type="button" class="form-kat-btn form-kat-btn--rektorskie" data-kat="rektorskie">godziny rektorskie</button>
+                            <button type="button" class="form-kat-btn form-kat-btn--dziekanskie" data-kat="dziekanskie">godziny dziekańskie</button>
+                            <button type="button" class="form-kat-btn form-kat-btn--egzamin" data-kat="egzamin">egzamin</button>
+                            <button type="button" class="form-kat-btn form-kat-btn--kolokwium" data-kat="kolokwium">kolokwium</button>
+                            <button type="button" class="form-kat-btn form-kat-btn--imprezy" data-kat="imprezy">imprezy studenckie</button>
+                            <button type="button" class="form-kat-btn form-kat-btn--inne" data-kat="inne">inne ciekawe wydarzenia</button>
+                        </div>
+                        <!-- Krok 2: banner wybranej kategorii -->
+                        <div class="form-kat-banner" id="form-kat-banner" hidden></div>
+                        <!-- Pola wspólne -->
+                        <label class="event-form__label">dnia
+                            <input type="date" class="event-form__input" id="form-data" required>
+                        </label>
+                        <label class="event-form__label">w godzinach
+                            <div class="event-form__time-row">
+                                <input type="time" class="event-form__input" id="form-czas-od">
+                                <span>–</span>
+                                <input type="time" class="event-form__input" id="form-czas-do">
+                            </div>
+                        </label>
+                        <label class="event-form__label" id="form-skrot-label" hidden>skrót
+                            <input type="text" class="event-form__input" id="form-skrot"
+                                   placeholder="np. AM2, Juwenalia..." required>
+                        </label>
+                        <!-- Pola tylko dla egzaminu / kolokwium -->
+                        <div id="form-exam-fields" hidden>
+                            <label class="event-form__label">grupa
+                                <input type="text" class="event-form__input" id="form-grupa" placeholder="np. I1">
+                            </label>
+                            <label class="event-form__label">Przedmiot
+                                <input type="text" class="event-form__input" id="form-przedmiot" placeholder="pełna nazwa">
+                            </label>
+                            <label class="event-form__label">sala
+                                <input type="text" class="event-form__input" id="form-sala" placeholder="np. C2.WEIA">
+                            </label>
+                        </div>
+                        <label class="event-form__label">szczegóły
+                            <textarea class="event-form__textarea" id="form-szczegoly"
+                                      placeholder="dodatkowe informacje..."></textarea>
+                        </label>
+                        <div class="event-form-buttons">
+                            <button type="submit" class="btn-confirm" id="btn-confirm">ZATWIERDŹ</button>
+                            <button type="button" class="btn-odrzuc" id="btn-odrzuc">ODRZUĆ</button>
+                        </div>
+                    </form>
+                </aside>
             </section>
-        </section>
+        </div>
     </main>
+
+    <footer class="mobile-footer">
+        <button class="footer-tab footer-tab--active">Kalendarz &#9660;</button>
+        <button class="footer-tab">Pogoda</button>
+        <button class="footer-tab">Legenda</button>
+    </footer>
+
+    <!-- Dymek informacyjny (macOS-style popover) -->
+    <div id="event-popover" class="event-popover" hidden>
+        <div class="popover-header" id="popover-header"></div>
+        <div class="popover-body">
+            <div class="popover-main"     id="popover-main"></div>
+            <div class="popover-time"     id="popover-time"     hidden></div>
+            <div class="popover-group"    id="popover-group"    hidden></div>
+            <div class="popover-location" id="popover-location" hidden></div>
+            <div class="popover-details"  id="popover-details"  hidden></div>
+            <!-- Przyciski akcji — widoczne tylko dla redaktora -->
+            <div class="popover-actions" id="popover-actions" hidden>
+                <button class="btn-popover-edit"   id="btn-popover-edit">Edytuj</button>
+                <button class="btn-popover-cancel" id="btn-popover-cancel">Odwołaj</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => start());
-        document.getElementById("login-button").addEventListener("click", function() {
-            window.location = "/00-01-login.html";
+        document.getElementById("login-button").addEventListener("click", function () {
+            if (!Auth.isLoggedIn()) {
+                window.location = "00-01-login.html";
+            }
         });
         document.getElementById("next-month-button").addEventListener("click", () => nextMonth());
         document.getElementById("prev-month-button").addEventListener("click", () => prevMonth());

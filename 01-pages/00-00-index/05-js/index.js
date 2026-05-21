@@ -45,10 +45,13 @@ function makeCallendar(month) {
         }
 
         let day = startDate.getDate();
+        let iso = startDate.getFullYear() + "-"
+                + String(startDate.getMonth() + 1).padStart(2, "0") + "-"
+                + String(day).padStart(2, "0");
         if (months[startDate.getMonth()] == month) {
-            table += "<td class=\"tile-calendar-active\" id=\"" + day + "\"><p>" + day + "</p></td>";
+            table += "<td class=\"tile-calendar-active\" id=\"" + day + "\" data-date=\"" + iso + "\"><p>" + day + "</p></td>";
         } else {
-            table += "<td class=\"tile-calendar-inactive\" id=\"" + day + "\"><p>" + day + "</p></td>";
+            table += "<td class=\"tile-calendar-inactive\" id=\"" + day + "\" data-date=\"" + iso + "\"><p>" + day + "</p></td>";
         }
 
         if (startDate.getDay() == 0) {
@@ -61,6 +64,7 @@ function makeCallendar(month) {
         startDate = startDate.addDays(1);
     }
     document.getElementsByTagName("tbody")[0].innerHTML = table;
+    document.dispatchEvent(new CustomEvent("calendarRendered"));
 }
 
 function getMonthStartDate(month, year) {
