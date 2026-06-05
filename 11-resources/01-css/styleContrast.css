@@ -1,0 +1,525 @@
+/* ============================================================
+   KALENDARZ PODRĘCZNY STUDENTA — Global Styles
+   ============================================================ */
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  /* App background */
+  --color-bg-app: #ff5454;
+
+  /* Header gradient */
+  --color-header-from: #e87820;
+  --color-header-to:   #f5cc00;
+
+  /* Surfaces */
+  --color-bg-card:       #ffffff;
+  --color-bg-card-inner: #f7f7f7;
+
+  /* Text */
+  --color-text-on-dark:  #ffffff;
+  --color-text-on-light: #222222;
+  --color-text-muted:    #888888;
+
+  /* Primary button — yellow */
+  --color-btn-primary-bg:     #ffd600;
+  --color-btn-primary-border: #333333;
+  --color-btn-primary-text:   #111111;
+
+  /* Secondary button — white */
+  --color-btn-secondary-bg:     #ffffff;
+  --color-btn-secondary-border: #555555;
+  --color-btn-secondary-text:   #222222;
+
+  /* Inputs */
+  --color-input-bg:     #f0f0f0;
+  --color-input-border: #cccccc;
+  --color-input-text:   #333333;
+  --color-input-focus:  #ffd600;
+
+  /* Calendar cells */
+  --color-cell-active:   #ffffff;
+  --color-cell-inactive: #f0d5d5;
+  --color-cell-border:   #dddddd;
+  --color-cell-head-bg:  #f5f5f5;
+  --color-cell-head-text:#333333;
+
+  /* Event category colours */
+  --color-cat-rektorskie:  #7cc142;
+  --color-cat-dziekanskie: #276221;
+  --color-cat-egzamin:     #e74c3c;
+  --color-cat-kolokwium:   #f5a623;
+  --color-cat-imprezy:     #f06292;
+  --color-cat-inne:        #26c6da;
+
+  /* Legend */
+  --color-legend-bg:     #f5f5f5;
+  --color-legend-border: #e0e0e0;
+
+  /* Error / status */
+  --color-error-bg:     #fff0f0;
+  --color-error-border: #cc0000;
+  --color-error-text:   #cc0000;
+
+  /* Editor badge */
+  --color-editor-bg:   #4caf50;
+  --color-editor-text: #ffffff;
+
+  /* Sizing & spacing */
+  --header-h:          44px;
+  --footer-mobile-h:   48px;
+  --radius-sm:          4px;
+  --radius-md:          8px;
+  --radius-lg:         14px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-btn:  0 2px 4px  rgba(0, 0, 0, 0.20);
+
+  /* Typography */
+  --font-main:   'Segoe UI', Arial, sans-serif;
+  --fz-xs:   10px;
+  --fz-sm:   12px;
+  --fz-base: 14px;
+  --fz-md:   15px;
+  --fz-lg:   16px;
+  --fz-xl:   20px;
+}
+
+/* ---- Dark theme skeleton (activate via JS: document.documentElement.dataset.theme="dark") ---- */
+[data-theme="dark"] {
+  --color-bg-app:        #1a0505;
+  --color-bg-card:       #252525;
+  --color-bg-card-inner: #2e2e2e;
+  --color-text-on-light: #f0f0f0;
+  --color-text-muted:    #aaaaaa;
+  --color-cell-active:   #2e2e2e;
+  --color-cell-inactive: #1f1f1f;
+  --color-cell-border:   #444444;
+  --color-cell-head-bg:  #333333;
+  --color-cell-head-text:#cccccc;
+  --color-input-bg:      #3a3a3a;
+  --color-input-border:  #555555;
+  --color-input-text:    #f0f0f0;
+  --color-legend-bg:     #252525;
+  --color-legend-border: #444444;
+  --color-error-bg:      #3a1010;
+  --color-error-text:    #ff8080;
+}
+
+/* ---- High-contrast theme skeleton (activate via JS: document.documentElement.dataset.theme="contrast") ---- */
+[data-theme="contrast"] {
+  --color-bg-app:             #000000;
+  --color-header-from:        #ff6600;
+  --color-header-to:          #ffdd00;
+  --color-bg-card:            #ffffff;
+  --color-bg-card-inner:      #ffffff;
+  --color-text-on-light:      #000000;
+  --color-text-muted:         #444444;
+  --color-btn-primary-bg:     #ffff00;
+  --color-btn-primary-border: #000000;
+  --color-btn-primary-text:   #000000;
+  --color-btn-secondary-bg:     #ffffff;
+  --color-btn-secondary-border: #000000;
+  --color-btn-secondary-text:   #000000;
+  --color-input-bg:           #ffffff;
+  --color-input-border:       #000000;
+  --color-input-text:         #000000;
+  --color-cell-border:        #000000;
+  --color-cell-inactive:      #e8e8e8;
+  --color-cell-head-bg:       #f0f0f0;
+  --color-legend-bg:          #f0f0f0;
+  --color-legend-border:      #000000;
+  --color-error-border:       #000000;
+  --color-error-text:         #000000;
+}
+
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--fz-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg-app);
+  color: var(--color-text-on-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  min-height: var(--header-h);
+  background: linear-gradient(to right, var(--color-header-from), var(--color-header-to));
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 12px;
+}
+
+.lang-indicator {
+  font-weight: 700;
+  font-size: var(--fz-base);
+  color: var(--color-text-on-dark);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.header-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.filters-label {
+  color: var(--color-text-on-dark);
+  font-size: var(--fz-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TAB BUTTONS (header filter tabs)
+   ============================================================ */
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-on-dark);
+  font-size: var(--fz-sm);
+  font-family: var(--font-main);
+  font-weight: 400;
+  cursor: pointer;
+  padding: 2px 4px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.12s;
+}
+
+.tab-btn--active {
+  font-weight: 700;
+}
+
+.tab-btn:hover {
+  opacity: 0.8;
+}
+
+
+/* ============================================================
+   PRIMARY BUTTON — yellow
+   ============================================================ */
+.btn-primary,
+.btn-login {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border: 2px solid var(--color-btn-primary-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 16px;
+  font-size: var(--fz-base);
+  font-weight: 700;
+  box-shadow: var(--shadow-btn);
+  transition: filter 0.12s;
+  white-space: nowrap;
+}
+
+.btn-primary:hover,
+.btn-login:hover {
+  filter: brightness(0.92);
+}
+
+/* ============================================================
+   SECONDARY BUTTON — white
+   ============================================================ */
+.btn-secondary {
+  background-color: var(--color-btn-secondary-bg);
+  color: var(--color-btn-secondary-text);
+  border: 2px solid var(--color-btn-secondary-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 16px;
+  font-size: var(--fz-base);
+  font-weight: 700;
+  box-shadow: var(--shadow-btn);
+  transition: filter 0.12s;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  filter: brightness(0.93);
+}
+
+
+/* ============================================================
+   EDITOR BADGE
+   ============================================================ */
+.editor-badge {
+  background-color: var(--color-editor-bg);
+  color: var(--color-editor-text);
+  font-weight: 700;
+  font-size: var(--fz-sm);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   FORM INPUT (shared)
+   ============================================================ */
+.form-input {
+  display: block;
+  width: 100%;
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: var(--fz-base);
+  font-family: var(--font-main);
+  color: var(--color-input-text);
+  transition: border-color 0.12s, outline 0.12s;
+}
+
+.form-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-input:focus {
+  outline: 2px solid var(--color-input-focus);
+  outline-offset: 1px;
+  border-color: var(--color-input-focus);
+}
+
+
+/* ============================================================
+   MAIN / PAGE LAYOUT
+   ============================================================ */
+main {
+  padding: 20px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - var(--header-h));
+}
+
+
+/* ============================================================
+   LOGIN PAGE
+   ============================================================ */
+.login-page main {
+  align-items: center;
+  min-height: calc(100vh - var(--header-h));
+}
+
+.login-card {
+  background-color: rgba(0, 0, 0, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 40px 48px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-card);
+}
+
+.login-title {
+  color: var(--color-text-on-dark);
+  font-size: var(--fz-lg);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.login-buttons .btn-primary,
+.login-buttons .btn-secondary {
+  flex: 1;
+  text-align: center;
+}
+
+.login-error {
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  color: var(--color-error-text);
+  font-size: var(--fz-sm);
+  font-weight: 600;
+  text-align: center;
+}
+
+
+/* ============================================================
+   MOBILE FOOTER NAVIGATION
+   ============================================================ */
+.mobile-footer {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--footer-mobile-h);
+  background-color: var(--color-bg-app);
+  border-top: 2px solid rgba(255, 255, 255, 0.18);
+  z-index: 200;
+}
+
+.footer-tab {
+  flex: 1;
+  height: 100%;
+  background: none;
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--color-text-on-dark);
+  font-size: var(--fz-sm);
+  font-family: var(--font-main);
+  transition: background-color 0.12s;
+}
+
+.footer-tab:last-child {
+  border-right: none;
+}
+
+.footer-tab--active {
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-tab:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+
+/* ============================================================
+   RESPONSIVE — 1024 px
+   ============================================================ */
+@media (max-width: 1024px) {
+  main {
+    padding: 14px 12px;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — 768 px
+   ============================================================ */
+@media (max-width: 768px) {
+  .header-filters {
+    gap: 6px;
+  }
+
+  main {
+    padding: 8px;
+    padding-bottom: calc(var(--footer-mobile-h) + 8px);
+    align-items: flex-start;
+  }
+
+  .mobile-footer {
+    display: flex;
+  }
+
+  /* Login */
+  .login-card {
+    padding: 28px 24px;
+  }
+
+  .login-buttons {
+    flex-direction: column;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — 480 px
+   ============================================================ */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0 10px;
+    gap: 8px;
+    min-height: 38px;
+    --header-h: 38px;
+  }
+
+  .filters-label {
+    display: none;
+  }
+
+  .tab-btn {
+    font-size: var(--fz-xs);
+  }
+
+  main {
+    padding: 4px;
+    padding-bottom: calc(var(--footer-mobile-h) + 4px);
+  }
+
+  .login-card {
+    padding: 24px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .login-title {
+    font-size: var(--fz-md);
+  }
+
+  .btn-primary,
+  .btn-login,
+  .btn-secondary {
+    padding: 6px 12px;
+    font-size: var(--fz-sm);
+  }
+}

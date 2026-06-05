@@ -4,11 +4,16 @@
     <title>Kalendarz Akademicki Politechniki Łódzkiej</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="11-resources/01-css/style.css">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css">
+    <link rel="stylesheet" href="11-resources/01-css/style.css" class="css-light">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css" class="css-light">
+    <link rel="stylesheet" href="11-resources/01-css/styleDark.css" class="css-dark">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarDark.css" class="css-dark">
+    <link rel="stylesheet" href="11-resources/01-css/styleContrast.css" class="css-contrast">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarContrast.css" class="css-contrast">
     <link rel="icon" href="11-resources/02-image/Favico.jpg">
     <!-- Kolejność ważna: db → auth → index → editor -->
     <script src="11-resources/05-js/mobile-detect.js"></script>
+    <script src="11-resources/05-js/stylesheet-change.js"></script>
     <script src="01-pages/00-00-index/05-js/db.js"></script>
     <script src="01-pages/00-00-index/05-js/auth.js"></script>
     <script src="01-pages/00-00-index/05-js/index.js"></script>
@@ -24,6 +29,7 @@
             <button class="tab-btn" id="tab-edit" hidden>Edytuj</button>
         </div>
         <div class="header-actions">
+            <button class="btn-login" id="css-button">Dark</button>
             <span class="editor-badge" id="editor-badge" hidden>REDAKTOR</span>
             <button class="btn-login" id="login-button">login</button>
         </div>
@@ -152,7 +158,36 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => start());
+        document.addEventListener("DOMContentLoaded", function ()
+        {
+            start()
+            disableStylesheet(document.getElementsByClassName("css-dark")[0]);
+            disableStylesheet(document.getElementsByClassName("css-dark")[1]);
+            disableStylesheet(document.getElementsByClassName("css-contrast")[0]);
+            disableStylesheet(document.getElementsByClassName("css-contrast")[1]);
+        });
+        // -- CSS Change --
+        document.getElementById("css-button").addEventListener("click", function () {
+            if (document.getElementById("css-button").innerText === "Dark") {
+                enableStylesheet(document.getElementsByClassName("css-dark")[0]);
+                enableStylesheet(document.getElementsByClassName("css-dark")[1]);
+                disableStylesheet(document.getElementsByClassName("css-light")[0]);
+                disableStylesheet(document.getElementsByClassName("css-light")[1]);
+                document.getElementById("css-button").innerText = "Contrast";
+            } else if (document.getElementById("css-button").innerText === "Contrast") {
+                enableStylesheet(document.getElementsByClassName("css-contrast")[0]);
+                enableStylesheet(document.getElementsByClassName("css-contrast")[1]);
+                disableStylesheet(document.getElementsByClassName("css-dark")[0]);
+                disableStylesheet(document.getElementsByClassName("css-dark")[1]);
+                document.getElementById("css-button").innerText = "Light";
+            } else {
+                enableStylesheet(document.getElementsByClassName("css-light")[0]);
+                enableStylesheet(document.getElementsByClassName("css-light")[1]);
+                disableStylesheet(document.getElementsByClassName("css-contrast")[0]);
+                disableStylesheet(document.getElementsByClassName("css-contrast")[1]);
+                document.getElementById("css-button").innerText = "Dark";
+            }
+        });
         document.getElementById("login-button").addEventListener("click", function () {
             if (!Auth.isLoggedIn()) {
                 window.location = "00-01-login.html";
