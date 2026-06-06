@@ -18,6 +18,7 @@
     <script src="01-pages/00-00-index/05-js/auth.js"></script>
     <script src="01-pages/00-00-index/05-js/index.js"></script>
     <script src="01-pages/00-00-index/05-js/editor.js"></script>
+    <script src="01-pages/00-00-index/05-js/legend-color.js"></script>
 </head>
 <body>
     <header class="app-header">
@@ -78,11 +79,23 @@
                     </section>
                     <section class="legend-section" hidden>
                         <h3 class="legend-title">FILTERS</h3>
+                        <!-- Rok -->
+                        <!-- Kierunek -->
+                        <!-- Grupa -->
+                        <!-- Obieralny 1 -->
+                        <!-- Obieralny 2 -->
 
                     </section>
                 </section>
+
+                <!-- Kolor Picker (widok widza) -->
+                <section id="calendar-color" class="editor-panel" hidden>
+                    <h3 class="color-title">COLOR</h3>
                     <div class="legend-item">
-                        <span class="legend-dot legend-dot--inne"></span>inne ciekawe wydarzenia
+                        <label class="legend-dot legend-dot--color" for="color-input"></label>
+                        <input type="color" class="color-input" id="color-input" value="#000000"><br>
+                        <button class="btn-color" id="color-confirm">Zatwierdź</button>
+                        <button id="color-exit">Wyjdź</button>
                     </div>
                 </section>
 
@@ -169,14 +182,40 @@
     </div>
 
     <script>
+        let currentColor = null;
         document.addEventListener("DOMContentLoaded", function ()
         {
-            start()
+            start();
+            colorRead();
+            document.querySelectorAll(".legend-dot").forEach(function(element) {
+                element.addEventListener("click", function () {
+                    console.log(element.classList[1]);
+                    currentColor = element.classList[1];
+                    openPicker();
+                });
+            });
             disableStylesheet(document.getElementsByClassName("css-dark")[0]);
             disableStylesheet(document.getElementsByClassName("css-dark")[1]);
             disableStylesheet(document.getElementsByClassName("css-contrast")[0]);
             disableStylesheet(document.getElementsByClassName("css-contrast")[1]);
         });
+
+        // -- Color Picker --
+        document.getElementById("color-exit").addEventListener("click", function () {
+            currentColor = null;
+            closePicker();
+        })
+        document.getElementById("color-confirm").addEventListener("click", function () {
+            colorEdit(currentColor);
+            colorSet(currentColor, document.getElementById("color-input").value);
+            currentColor = null;
+            closePicker();
+        });
+        document.addEventListener("calendarRendered", function() {
+            console.log("calendarRendered");
+            colorRead();
+        });
+
         // -- CSS Change --
         document.getElementById("css-button").addEventListener("click", function () {
             if (document.getElementById("css-button").innerText === "Dark") {
@@ -216,8 +255,12 @@
                 window.location = "00-01-login.html";
             }
         });
-        document.getElementById("next-month-button").addEventListener("click", () => nextMonth());
-        document.getElementById("prev-month-button").addEventListener("click", () => prevMonth());
+        document.getElementById("next-month-button").addEventListener("click", function () {
+            nextMonth();
+        });
+        document.getElementById("prev-month-button").addEventListener("click", function () {
+            prevMonth();
+        });
         document.getElementById("legend-button").addEventListener("click", function (event) {
             console.log("legend event");
             if (document.getElementsByClassName("legend-title")[0].innerText === "LEGENDA") {

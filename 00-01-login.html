@@ -17,31 +17,32 @@
     <main>
         <section class="login-card">
             <div class="login-card">
-            <h2 class="login-title">zaloguj się do konta redaktora</h2>
-            <form id="login-form" class="login-form" novalidate>
-                <input
-                    type="text"
-                    id="login-input"
-                    class="form-input"
-                    placeholder="login"
-                    autocomplete="username"
-                />
-                <input
-                    type="password"
-                    id="password-input"
-                    class="form-input"
-                    placeholder="hasło"
-                    autocomplete="current-password"
-                />
-                <div class="login-buttons">
-                    <button type="submit" class="btn-primary" id="btn-submit">zaloguj się</button>
-                    <button type="button" class="btn-secondary" id="cancel-button">Anuluj</button>
-                </div>
-                <div class="login-error" id="login-error" hidden>
-                    Nieprawidłowy login lub hasło
-                </div>
-            </form>
-        </div>
+                <h2 class="login-title">zaloguj się do konta redaktora</h2>
+                <form id="login-form" class="login-form" novalidate>
+                    <input
+                        type="text"
+                        id="login-input"
+                        class="form-input"
+                        placeholder="login"
+                        autocomplete="username"
+                    />
+                    <input
+                        type="password"
+                        id="password-input"
+                        class="form-input"
+                        placeholder="hasło"
+                        autocomplete="current-password"
+                    />
+                    <div class="login-buttons">
+                        <button type="submit" class="btn-primary" id="btn-submit">zaloguj się</button>
+                        <button type="button" class="btn-secondary" id="cancel-button">Anuluj</button>
+                    </div>
+                    <div class="login-error" id="login-error" hidden>
+                        Nieprawidłowy login lub hasło
+                    </div>
+                </form>
+            </div>
+        </section>
     </main>
     <script>
         // Jeśli już zalogowany — wróć od razu
