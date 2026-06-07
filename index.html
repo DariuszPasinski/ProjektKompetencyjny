@@ -19,6 +19,8 @@
     <script src="01-pages/00-00-index/05-js/index.js"></script>
     <script src="01-pages/00-00-index/05-js/editor.js"></script>
     <script src="01-pages/00-00-index/05-js/legend-color.js"></script>
+    <script src="01-pages/00-00-index/05-js/tabela.js"></script>
+    <script src="01-pages/00-00-index/05-js/filters.js"></script>
 </head>
 <body>
     <header class="app-header">
@@ -79,12 +81,14 @@
                     </section>
                     <section class="legend-section" hidden>
                         <h3 class="legend-title">FILTERS</h3>
-                        <!-- Rok -->
+                        <section class="filers-section">
+
+                        </section>
+                        <!-- Semester -->
                         <!-- Kierunek -->
-                        <!-- Grupa -->
+                        <!-- Grupa / Specjalizacja  -->
                         <!-- Obieralny 1 -->
                         <!-- Obieralny 2 -->
-
                     </section>
                 </section>
 
@@ -154,6 +158,10 @@
                         </div>
                     </form>
                 </aside>
+
+                <section id="filers-section" class="editor-panel" hidden>
+                    <!-- Wszytko tworzone jest w pliku filtry js -->
+                </section>
             </section>
         </div>
     </main>
@@ -183,6 +191,8 @@
 
     <script>
         let currentColor = null;
+        let currentFilter = []; // ID filtrowanych grup
+
         document.addEventListener("DOMContentLoaded", function ()
         {
             start();
@@ -239,17 +249,6 @@
             }
         });
 
-        // -- Legend Filters Change --
-        document.getElementById("legend-button").addEventListener("click", function (){
-            if (document.getElementById("legend-button").innerText === "Filtry") {
-                document.getElementById("legend-button").innerText = "Legenda";
-            } else {
-                document.getElementById("legend-button").innerText = "Filtry";
-            }
-            document.getElementsByClassName("legend-section")[0].classList.toggle("hidden");
-            document.getElementsByClassName("legend-section")[1].classList.toggle("hidden");
-        });
-
         document.getElementById("login-button").addEventListener("click", function () {
             if (!Auth.isLoggedIn()) {
                 window.location = "00-01-login.html";
@@ -261,19 +260,9 @@
         document.getElementById("prev-month-button").addEventListener("click", function () {
             prevMonth();
         });
-        document.getElementById("legend-button").addEventListener("click", function (event) {
-            console.log("legend event");
-            if (document.getElementsByClassName("legend-title")[0].innerText === "LEGENDA") {
-                // Filters
-                document.getElementsByClassName("legend-title")[0].innerText = "FILTRY";
-                document.getElementById("legend-button").innerText = "LEGENDA";
-            } else {
-                // Legend
-                document.getElementsByClassName("legend-title")[0].innerText = "LEGENDA";
-                document.getElementById("legend-button").innerText = "FILTRY";
-            }
-            document.getElementsByClassName("legend-section")[0].toggleAttribute("hidden");
-            document.getElementsByClassName("legend-section")[1].toggleAttribute("hidden");
+
+        document.getElementById("legend-button").addEventListener("click", function() {
+            openFilter();
         })
     </script>
 </body>
