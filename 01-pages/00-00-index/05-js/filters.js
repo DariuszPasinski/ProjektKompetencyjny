@@ -1,4 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+let studentGroups;
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const filters = await fetch('get_groups.php');
+    studentGroups = await filters.json();
+    //console.log(filters)
+    //console.log(studentGroups)
+
     currentFilter = readFilters();
     createMenu();
 });
@@ -26,9 +33,11 @@ function readFilters() {
 
 function setFilters(filters) {
     localStorage.setItem("filters", JSON.stringify(filters));
+    _renderCalendarEvents();
 }
 
 function createMenu() {
+    while (studentGroups == null) {}
     const filters = document.getElementById("filers-section");
 
     const filtersTab = document.createElement("div");
@@ -112,24 +121,13 @@ function createHorizontalMenu(section, semestr) {
         title.innerText = kierunek.field_of_study;
         div.appendChild(title);
 
-        console.log(semestr + " " + kierunek.field_of_study + " " + kierunek.group_types.length);
+        // console.log(semestr + " " + kierunek.field_of_study + " " + kierunek.group_types.length);
        if (kierunek.group_types.length === 1) {
             // Nie ma podziału na specjalizacje
             let groups = studentGroups.filter(g =>
                 g.semester === semestr &&
                 g.field_of_study === kierunek.field_of_study
             );
-
-            // groups.forEach(group => {
-            //     let groupButton = document.createElement("button");
-            //     groupButton.innerHTML = group.name;
-            //     groupButton.id = "Group:" + group.id;
-            //     groupButton.classList.add("filters-group-button");
-            //     groupButton.addEventListener("click", function () {
-            //         toggleGroupButton(groupButton.id);
-            //     });
-            //     div.appendChild(groupButton);
-            // })
            createGroupButtons(div, groups);
        } else {
             // Jest podział na specjalizację
@@ -138,18 +136,7 @@ function createHorizontalMenu(section, semestr) {
                g.field_of_study === kierunek.field_of_study &&
                g.group_type_id === 2
            );
-           console.log(groups);
-
-           // groups.forEach(group => {
-           //     let groupButton = document.createElement("button");
-           //     groupButton.innerHTML = group.name;
-           //     groupButton.id = "Group:" + group.id;
-           //     groupButton.classList.add("filters-group-button");
-           //     groupButton.addEventListener("click", function () {
-           //         toggleGroupButton(groupButton.id);
-           //     });
-           //     div.appendChild(groupButton);
-           // })
+           // console.log(groups);
            createGroupButtons(div, groups);
 
            let electives = studentGroups.filter(g =>
@@ -157,9 +144,9 @@ function createHorizontalMenu(section, semestr) {
                g.field_of_study === kierunek.field_of_study &&
                g.group_type_id === 3
            );
-           console.log(electives);
+           // console.log(electives);
            if (electives.length > 0) {
-               console.log(electives.length);
+               // console.log(electives.length);
                const specializationTitle = document.createElement("h4");
                specializationTitle.innerText = "Przedmioty obieralne";
                div.appendChild(specializationTitle);
@@ -199,13 +186,13 @@ function createGroupButtons(div, groups) {
 function toggleGroupButton(id) {
     if (document.getElementById(id).classList.contains("filters-group-button")) {
         // Toggle on
-        currentFilter.push(id);
+        currentFilter.push(id.split(":")[1]);
         currentFilter.sort();
         document.getElementById(id).classList.remove("filters-group-button");
         document.getElementById(id).classList.add("filters-group-button-clicked");
     } else {
         // Toggle off
-        const index = currentFilter.indexOf(id);
+        const index = currentFilter.indexOf(id.split(":")[1]);
         if (index >= 0) {
             currentFilter.splice(index, 1);
             document.getElementById(id).classList.add("filters-group-button");

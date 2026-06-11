@@ -212,11 +212,6 @@
   border-bottom: 1px solid var(--color-legend-border);
 }
 
-.btn-legend {
-  align-items: center;
-  border: none;
-}
-
 .legend-item {
   display: flex;
   align-items: center;
@@ -752,4 +747,181 @@
 .btn-popover-cancel {
   background-color: #FF3B30;
   color: #ffffff;
+}
+
+
+
+#calendar-main td {
+    position: relative;
+}
+
+.semester-day-info {
+    position: absolute;
+    right: 6px;
+    bottom: 4px;
+    font-size: 10px;
+    line-height: 1.1;
+    color: #888;
+    text-align: right;
+    pointer-events: none;
+}
+
+
+.popover-report-view {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff3cd;
+    border: 1px solid #ffda6a;
+    color: #5c4300;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.popover-report-view strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Ładne reportowanie w popupie — desktop */
+
+.event-popover #btn-popover-report {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    background: #f0ad4e;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.event-popover #btn-popover-report:hover {
+    filter: brightness(0.95);
+}
+
+.event-popover #btn-popover-report:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+#popover-report-form {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #ddd;
+}
+
+#popover-report-text {
+    width: 100%;
+    min-height: 78px;
+    box-sizing: border-box;
+    resize: vertical;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #f4f4f6;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+#popover-report-text:focus {
+    outline: none;
+    border-color: #f0ad4e;
+    box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.22);
+}
+
+#popover-report-form .event-form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#popover-report-form #btn-report-submit,
+#popover-report-form #btn-report-cancel {
+    flex: 1;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#popover-report-form #btn-report-submit {
+    background: #28a745;
+    color: #fff;
+}
+
+#popover-report-form #btn-report-cancel {
+    background: #dc3545;
+    color: #fff;
+}
+
+#popover-report-form #btn-report-submit:hover,
+#popover-report-form #btn-report-cancel:hover {
+    filter: brightness(0.95);
+}
+
+/* Popup desktop — tylko dla wersji desktopowej */
+
+@media (min-width: 769px) {
+    .event-popover {
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        transform: translate(-50%, -50%) !important;
+        transform-origin: center center !important;
+
+        width: 360px !important;
+        max-width: calc(100vw - 32px) !important;
+        max-height: calc(100vh - 80px) !important;
+
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+
+    .event-popover .popover-body {
+        overflow: visible !important;
+        max-height: none !important;
+    }
+}
+
+#popover-report-text {
+    min-height: 70px;
+    max-height: 110px;
+}
+
+.editor-badge--admin {
+    background-color: #e53935 !important;
+    color: #fff !important;
+}
+
+.editor-badge--redactor {
+    background-color: #40b95f !important;
+    color: #fff !important;
+}
+
+.event-tag {
+    white-space: normal;
+    line-height: 1.25;
+}
+
+.event-tag-title {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-report-flag {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1;
 }
