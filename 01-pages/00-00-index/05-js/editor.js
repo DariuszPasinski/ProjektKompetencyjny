@@ -38,12 +38,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('tab-events')?.addEventListener('click', async () => {
     await _setCalendarFilter('university');
-    _setLegendVisibility(true, false);
+    _setLegendVisibility(false, true);
   });
 
   document.getElementById('tab-assessments')?.addEventListener('click', async () => {
     await _setCalendarFilter('assessment');
-    _setLegendVisibility(false, true);
+    _setLegendVisibility(true, false);
   });
 
   document.getElementById('tab-my-events')?.addEventListener('click', async () => {
