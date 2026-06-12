@@ -36,6 +36,7 @@ if ($roleName === "ADMIN") {
     <script src="01-pages/00-00-index/05-js/index.js"></script>
     <script src="01-pages/00-00-index/05-js/editor.js"></script>
     <script src="mobile/mobile.js"></script>
+    <script src="../mobile/mobile.js"></script>
 </head>
 <body>
     <header class="app-header">

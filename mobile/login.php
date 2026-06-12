@@ -70,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="../11-resources/01-css/style.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="icon" href="../11-resources/02-image/Favico.jpg">
+    <script src="../11-resources/05-js/mobile-detect.js"></script>
 </head>
 <body class="login-page">
     <header class="app-header">
