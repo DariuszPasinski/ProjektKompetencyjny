@@ -212,6 +212,11 @@
   border-bottom: 1px solid var(--color-legend-border);
 }
 
+.btn-legend {
+  align-items: center;
+  border: none;
+}
+
 .legend-item {
   display: flex;
   align-items: center;

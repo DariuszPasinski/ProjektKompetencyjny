@@ -243,6 +243,197 @@
 
 
 /* ============================================================
+   LEGEND FILTER BUTTON
+   ============================================================ */
+.btn-legend {
+  display: block;
+  width: 100%;
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border: 2px solid var(--color-btn-primary-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: filter 0.12s;
+}
+
+.btn-legend:hover { filter: brightness(0.90); }
+
+
+/* ============================================================
+   FILTER PANEL (jasny motyw)
+   ============================================================ */
+#filers-section {
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.filters-tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-cell-border);
+  margin-bottom: 12px;
+}
+
+/* Przyciski semestru — pill style */
+.filters-tablinks-vertical {
+  background-color: var(--color-bg-card-inner);
+  color: var(--color-text-on-light);
+  border: 2px solid var(--color-cell-border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: var(--fz-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+.filters-tablinks-vertical:hover {
+  border-color: var(--color-btn-primary-bg);
+  background-color: var(--color-cell-inactive);
+}
+
+.filters-tablinks-vertical.active {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border-color: var(--color-btn-primary-border);
+  font-weight: 700;
+}
+
+/* Przycisk zamknij (ostatni w .filters-tab) */
+.filters-tab .filters-tablinks-vertical:last-child {
+  background-color: #dc3545;
+  color: #ffffff;
+  border-color: #b02a37;
+  margin-left: auto;
+  font-size: 16px;
+  line-height: 1;
+  padding: 3px 12px;
+}
+
+.filters-tab .filters-tablinks-vertical:last-child:hover {
+  background-color: #b02a37;
+}
+
+/* Zawartość semestru — karta */
+.filters-tabcontent-vertical {
+  background-color: var(--color-bg-card-inner);
+  border: 1px solid var(--color-cell-border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filters-tabcontent-vertical h3 {
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  color: var(--color-text-on-light);
+  letter-spacing: 0.06em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-cell-border);
+  margin-bottom: 2px;
+}
+
+/* Przyciski kierunku */
+.filters-tablinks-horizontal {
+  background-color: var(--color-bg-card);
+  color: var(--color-text-on-light);
+  border: 1.5px solid var(--color-cell-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: var(--fz-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.filters-tablinks-horizontal:hover {
+  border-color: var(--color-btn-primary-bg);
+  background-color: var(--color-cell-inactive);
+}
+
+.filters-tablinks-horizontal.active {
+  border-color: var(--color-btn-primary-bg);
+  background-color: rgba(255, 214, 0, 0.12);
+  font-weight: 700;
+}
+
+.filters-tabcontent-horizontal {
+  padding: 8px 4px 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.filters-tabcontent-horizontal h3 {
+  width: 100%;
+  font-size: var(--fz-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filters-tabcontent-horizontal h4 {
+  width: 100%;
+  font-size: var(--fz-xs);
+  color: var(--color-text-muted);
+  margin: 6px 0 2px;
+}
+
+/* Chip grupy — nieaktywny */
+.filters-group-button {
+  background-color: var(--color-input-bg);
+  color: var(--color-text-on-light);
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fz-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin: 2px;
+}
+
+.filters-group-button:hover {
+  border-color: var(--color-btn-primary-bg);
+  background-color: var(--color-cell-inactive);
+}
+
+/* Chip grupy — aktywny (zaznaczony) */
+.filters-group-button-clicked {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border: 1.5px solid var(--color-btn-primary-border);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fz-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin: 2px;
+}
+
+
+/* ============================================================
    EDITOR SIDE PANEL (right of calendar in editor mode)
    ============================================================ */
 .editor-panel {
@@ -754,6 +945,181 @@
   color: #ffffff;
 }
 
+#calendar-main td {
+  position: relative;
+}
+
+.semester-day-info {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  font-size: 10px;
+  line-height: 1.1;
+  color: #888;
+  text-align: right;
+  pointer-events: none;
+}
+
+
+.popover-report-view {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff3cd;
+  border: 1px solid #ffda6a;
+  color: #5c4300;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.popover-report-view strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Ładne reportowanie w popupie — desktop */
+
+.event-popover #btn-popover-report {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: #f0ad4e;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.event-popover #btn-popover-report:hover {
+  filter: brightness(0.95);
+}
+
+.event-popover #btn-popover-report:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+#popover-report-form {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+}
+
+#popover-report-text {
+  width: 100%;
+  min-height: 78px;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #f4f4f6;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+#popover-report-text:focus {
+  outline: none;
+  border-color: #f0ad4e;
+  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.22);
+}
+
+#popover-report-form .event-form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#popover-report-form #btn-report-submit,
+#popover-report-form #btn-report-cancel {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#popover-report-form #btn-report-submit {
+  background: #28a745;
+  color: #fff;
+}
+
+#popover-report-form #btn-report-cancel {
+  background: #dc3545;
+  color: #fff;
+}
+
+#popover-report-form #btn-report-submit:hover,
+#popover-report-form #btn-report-cancel:hover {
+  filter: brightness(0.95);
+}
+
+/* Popup desktop — tylko dla wersji desktopowej */
+
+@media (min-width: 769px) {
+  .event-popover {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    transform: translate(-50%, -50%) !important;
+    transform-origin: center center !important;
+
+    width: 360px !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100vh - 80px) !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .event-popover .popover-body {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+}
+
+#popover-report-text {
+  min-height: 70px;
+  max-height: 110px;
+}
+
+.editor-badge--admin {
+  background-color: #e53935 !important;
+  color: #fff !important;
+}
+
+.editor-badge--redactor {
+  background-color: #40b95f !important;
+  color: #fff !important;
+}
+
+.event-tag {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.event-tag-title {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-report-flag {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1;
+}
+
 
 /* ============================================================
    CONTRAST MODE — calendar overrides
@@ -1051,3 +1417,178 @@
 }
 
 .btn-legend:hover { filter: brightness(0.85); }
+
+#calendar-main td {
+  position: relative;
+}
+
+.semester-day-info {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  font-size: 10px;
+  line-height: 1.1;
+  color: #888;
+  text-align: right;
+  pointer-events: none;
+}
+
+
+.popover-report-view {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff3cd;
+  border: 1px solid #ffda6a;
+  color: #5c4300;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.popover-report-view strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Ładne reportowanie w popupie — desktop */
+
+.event-popover #btn-popover-report {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: #f0ad4e;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.event-popover #btn-popover-report:hover {
+  filter: brightness(0.95);
+}
+
+.event-popover #btn-popover-report:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+#popover-report-form {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+}
+
+#popover-report-text {
+  width: 100%;
+  min-height: 78px;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #f4f4f6;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+#popover-report-text:focus {
+  outline: none;
+  border-color: #f0ad4e;
+  box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.22);
+}
+
+#popover-report-form .event-form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#popover-report-form #btn-report-submit,
+#popover-report-form #btn-report-cancel {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#popover-report-form #btn-report-submit {
+  background: #28a745;
+  color: #fff;
+}
+
+#popover-report-form #btn-report-cancel {
+  background: #dc3545;
+  color: #fff;
+}
+
+#popover-report-form #btn-report-submit:hover,
+#popover-report-form #btn-report-cancel:hover {
+  filter: brightness(0.95);
+}
+
+/* Popup desktop — tylko dla wersji desktopowej */
+
+@media (min-width: 769px) {
+  .event-popover {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    transform: translate(-50%, -50%) !important;
+    transform-origin: center center !important;
+
+    width: 360px !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100vh - 80px) !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .event-popover .popover-body {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+}
+
+#popover-report-text {
+  min-height: 70px;
+  max-height: 110px;
+}
+
+.editor-badge--admin {
+  background-color: #e53935 !important;
+  color: #fff !important;
+}
+
+.editor-badge--redactor {
+  background-color: #40b95f !important;
+  color: #fff !important;
+}
+
+.event-tag {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.event-tag-title {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-report-flag {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1;
+}

@@ -91,10 +91,15 @@
 /* ---- Dark theme skeleton (activate via JS: document.documentElement.dataset.theme="dark") ---- */
 [data-theme="dark"] {
   --color-bg-app:        #1a0505;
+  --color-header-from:   #c05500;
+  --color-header-to:     #000000;
   --color-bg-card:       #252525;
   --color-bg-card-inner: #2e2e2e;
   --color-text-on-light: #f0f0f0;
   --color-text-muted:    #aaaaaa;
+  --color-btn-secondary-bg:     #2a2a2a;
+  --color-btn-secondary-border: #666666;
+  --color-btn-secondary-text:   #f0f0f0;
   --color-cell-active:   #2e2e2e;
   --color-cell-inactive: #1f1f1f;
   --color-cell-border:   #444444;
@@ -127,11 +132,15 @@
   --color-input-bg:           #ffffff;
   --color-input-border:       #000000;
   --color-input-text:         #000000;
-  --color-cell-border:        #000000;
+  --color-input-focus:        #ffff00;
+  --color-cell-active:        #000000;
   --color-cell-inactive:      #e8e8e8;
+  --color-cell-border:        #000000;
   --color-cell-head-bg:       #f0f0f0;
+  --color-cell-head-text:     #ffff00;
   --color-legend-bg:          #f0f0f0;
   --color-legend-border:      #000000;
+  --color-error-bg:           #1a1100;
   --color-error-border:       #000000;
   --color-error-text:         #000000;
 }
@@ -523,4 +532,52 @@ main {
     padding: 6px 12px;
     font-size: var(--fz-sm);
   }
+}
+
+/* ============================================================
+   LOGOUT
+   ============================================================ */
+.user-menu {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  min-width: 180px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.user-dropdown-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.user-dropdown-logout {
+  display: block;
+  text-decoration: none;
+  color: white;
+  background: #991111;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.user-dropdown-name {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.user-dropdown-role {
+  color: black;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 14px;
 }
