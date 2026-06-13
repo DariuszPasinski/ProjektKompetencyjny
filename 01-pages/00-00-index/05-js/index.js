@@ -1,4 +1,4 @@
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 const days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
 
 const tableHTML = [
@@ -68,7 +68,8 @@ function makeCallendar(month) {
 }
 
 function getMonthStartDate(month, year) {
-    let startDate = new Date("1-" + month + "-" + year); 
+    const monthIdx = months.indexOf(month);
+    let startDate = new Date(parseInt(year), monthIdx, 1);
     while (startDate.getDay() != 1) {
         startDate = startDate.addDays(-1);
     }
@@ -76,7 +77,8 @@ function getMonthStartDate(month, year) {
 }
 
 function getMonthEndDate(month, year) {
-    let endDate = new Date("27-" + month + "-" + year);
+    const monthIdx = months.indexOf(month);
+    let endDate = new Date(parseInt(year), monthIdx, 27);
     let newMonth = false;
     while (!(endDate.getDay() == 0 && newMonth == true)) {
         endDate = endDate.addDays(1);

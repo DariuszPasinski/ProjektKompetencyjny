@@ -702,3 +702,273 @@ main {
   font-size: 11px;
   line-height: 1;
 }
+
+
+/* ============================================================
+   PANEL FILTRÓW MOBILNYCH
+   ============================================================ */
+.mobile-filter-panel {
+  position: fixed;
+  bottom: var(--footer-mobile-h, 48px);
+  left: 0;
+  right: 0;
+  max-height: 78vh;
+  background-color: var(--color-bg-card, #ffffff);
+  border-top: 1px solid var(--color-cell-border, #dddddd);
+  border-radius: 16px 16px 0 0;
+  padding: 0 16px calc(16px + var(--safe-bottom));
+  z-index: 151;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.24);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mobile-filter-panel[hidden] { display: none !important; }
+
+.mobile-filter-handle {
+  width: 40px;
+  height: 5px;
+  background-color: rgba(60, 60, 67, 0.30);
+  border-radius: 3px;
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.mobile-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 8px;
+  border-bottom: 1px solid var(--color-cell-border, #dddddd);
+  margin-bottom: 10px;
+}
+
+.mobile-filter-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-on-light, #222);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.mobile-filter-close {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  min-height: 32px;
+}
+
+.mobile-filter-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: 8px;
+}
+
+/* Nadpisz styl editor-panel dla sekcji filtrów w mobile */
+#filers-section {
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+}
+
+/* Przyciski filtrów — dotyk-friendly */
+.filters-tablinks-vertical {
+  padding: 8px 16px;
+  font-size: 13px;
+  min-height: 36px;
+  touch-action: manipulation;
+}
+
+.filters-tablinks-horizontal {
+  padding: 8px 14px;
+  font-size: 13px;
+  min-height: 40px;
+  touch-action: manipulation;
+}
+
+.filters-group-button,
+.filters-group-button-clicked {
+  padding: 6px 14px;
+  font-size: 12px;
+  min-height: 32px;
+  touch-action: manipulation;
+}
+
+.filters-tab {
+  padding: 10px 0;
+  margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   DARK MODE — mobile overrides (data-theme="dark" on html)
+   ============================================================ */
+[data-theme="dark"] .calendar-wrapper {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .month-nav {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .event-popover {
+  background: #1e1e1e;
+  border: 1px solid #444444;
+}
+
+[data-theme="dark"] .popover-main  { color: #f0f0f0; }
+[data-theme="dark"] .popover-time  { color: #aaaaaa; }
+[data-theme="dark"] .popover-group { color: #e0e0e0; }
+[data-theme="dark"] .popover-location { color: #e0e0e0; }
+
+[data-theme="dark"] .popover-details {
+  background: #2a2a2a;
+  border-color: #444444;
+  color: #cccccc;
+}
+
+[data-theme="dark"] .popover-report-view {
+  background: #3a2800;
+  border-color: #6a4e00;
+  color: #f5c842;
+}
+
+[data-theme="dark"] #popover-report-text {
+  background: #252525;
+  border-color: #444444;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .day-card {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .day-card__num  { color: #f0f0f0; }
+[data-theme="dark"] .day-card__abbr { color: #888888; }
+
+[data-theme="dark"] .mobile-legend-panel {
+  background-color: #1a1a1a;
+  border-color: #333333;
+}
+
+[data-theme="dark"] .mobile-legend-panel .legend-title { color: #f0f0f0; border-color: #333333; }
+[data-theme="dark"] .mobile-legend-panel .legend-item  { color: #f0f0f0; }
+
+[data-theme="dark"] .mobile-filter-panel {
+  background-color: #1a1a1a;
+  border-color: #333333;
+}
+
+[data-theme="dark"] .mobile-filter-title { color: #f0f0f0; }
+[data-theme="dark"] .mobile-filter-header { border-color: #333333; }
+[data-theme="dark"] .mobile-filter-handle { background-color: rgba(255,255,255,0.25); }
+
+[data-theme="dark"] .user-dropdown {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #444444;
+}
+
+[data-theme="dark"] .user-dropdown strong { color: #f0f0f0; }
+[data-theme="dark"] .user-dropdown div    { color: #cccccc; }
+
+
+/* ============================================================
+   CONTRAST MODE — mobile overrides (data-theme="contrast" on html)
+   ============================================================ */
+[data-theme="contrast"] .calendar-wrapper {
+  background-color: #000000;
+  border: 3px solid #ffff00;
+}
+
+[data-theme="contrast"] .month-nav {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+[data-theme="contrast"] .month-nav #current-date-paragraph { color: #ffff00; }
+[data-theme="contrast"] .btn-nav { color: #ffff00; }
+
+[data-theme="contrast"] .day-card {
+  background-color: #000000;
+  border: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .day-card__num  { color: #ffff00; }
+[data-theme="contrast"] .day-card__abbr { color: #cccc00; }
+
+[data-theme="contrast"] .event-popover {
+  background: #000000;
+  border: 3px solid #ffff00;
+}
+
+[data-theme="contrast"] .popover-main     { color: #ffff00; }
+[data-theme="contrast"] .popover-time     { color: #cccc00; }
+[data-theme="contrast"] .popover-group    { color: #ffff00; }
+[data-theme="contrast"] .popover-location { color: #ffff00; }
+
+[data-theme="contrast"] .popover-details {
+  background: #111100;
+  border-color: #666600;
+  color: #ffff00;
+}
+
+[data-theme="contrast"] .popover-report-view {
+  background: #1a1100;
+  border-color: #888800;
+  color: #ffff00;
+}
+
+[data-theme="contrast"] #popover-report-text {
+  background: #0a0a00;
+  border-color: #888800;
+  color: #ffff00;
+}
+
+[data-theme="contrast"] .mobile-legend-panel {
+  background-color: #000000;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .mobile-legend-panel .legend-title { color: #ffff00; border-color: #ffff00; }
+[data-theme="contrast"] .mobile-legend-panel .legend-item  { color: #ffff00; }
+
+[data-theme="contrast"] .mobile-filter-panel {
+  background-color: #000000;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .mobile-filter-title  { color: #ffff00; }
+[data-theme="contrast"] .mobile-filter-header { border-color: #ffff00; }
+[data-theme="contrast"] .mobile-filter-handle { background-color: rgba(255,255,0,0.4); }
+
+[data-theme="contrast"] .mobile-footer {
+  background-color: #000000;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .footer-tab { color: #ffff00; border-color: #ffff00; }
+
+[data-theme="contrast"] .user-dropdown {
+  background: #000000;
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+[data-theme="contrast"] .user-dropdown strong { color: #ffff00; }
+[data-theme="contrast"] .user-dropdown div    { color: #cccc00; }

@@ -1,5 +1,5 @@
-calendar.css/* ============================================================
-   KALENDARZ PODRĘCZNY STUDENTA — Calendar Styles
+/* ============================================================
+   KALENDARZ PODRĘCZNY STUDENTA — Calendar Styles (Dark Mode)
    ============================================================ */
 
 /* ============================================================
@@ -753,3 +753,221 @@ calendar.css/* ============================================================
   background-color: #FF3B30;
   color: #ffffff;
 }
+
+
+/* ============================================================
+   DARK MODE — overrides for hardcoded colors
+   ============================================================ */
+
+.event-popover {
+  background: #1e1e1e;
+  border: 1px solid #444444;
+}
+
+.popover-main     { color: #f0f0f0; }
+.popover-time     { color: #aaaaaa; }
+.popover-group    { color: #e0e0e0; }
+.popover-location { color: #e0e0e0; }
+
+.popover-details {
+  background: #2a2a2a;
+  border-color: #444444;
+  color: #cccccc;
+}
+
+.popover-header + .popover-body {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.popover-actions {
+  border-top-color: rgba(255, 255, 255, 0.10);
+}
+
+.popover-report-view {
+  background: #3a2800;
+  border-color: #6a4e00;
+  color: #f5c842;
+}
+
+#popover-report-text {
+  background: #252525;
+  border-color: #444444;
+  color: #f0f0f0;
+}
+
+#popover-report-form #btn-report-submit { background: #28a745; }
+#popover-report-form #btn-report-cancel { background: #dc3545; }
+
+/* Semester day info */
+.semester-day-info { color: #888888; }
+
+/* ============================================================
+   DARK MODE — Filter panel
+   ============================================================ */
+
+#filers-section {
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.filters-tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-cell-border);
+  margin-bottom: 12px;
+}
+
+.filters-tablinks-vertical {
+  background-color: #222222;
+  color: #f0f0f0;
+  border: 2px solid #444444;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: var(--fz-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+.filters-tablinks-vertical:hover {
+  border-color: var(--color-btn-primary-bg);
+  background-color: #2a2a2a;
+}
+
+.filters-tablinks-vertical.active {
+  background-color: var(--color-btn-primary-bg);
+  color: #111111;
+  border-color: var(--color-btn-primary-bg);
+  font-weight: 700;
+}
+
+.filters-tab .filters-tablinks-vertical:last-child {
+  background-color: #8b1515;
+  color: #ffffff;
+  border-color: #6b0e0e;
+  margin-left: auto;
+}
+
+.filters-tab .filters-tablinks-vertical:last-child:hover {
+  background-color: #6b0e0e;
+}
+
+.filters-tabcontent-vertical {
+  background-color: #1e1e1e;
+  border: 1px solid #333333;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filters-tabcontent-vertical h3 {
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: 0.06em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #333333;
+  margin-bottom: 2px;
+}
+
+.filters-tablinks-horizontal {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+  border: 1.5px solid #333333;
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: var(--fz-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.filters-tablinks-horizontal:hover  { border-color: var(--color-btn-primary-bg); }
+.filters-tablinks-horizontal.active {
+  border-color: var(--color-btn-primary-bg);
+  background-color: #2a2a00;
+  font-weight: 700;
+}
+
+.filters-tabcontent-horizontal {
+  padding: 8px 4px 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.filters-tabcontent-horizontal h3 {
+  width: 100%;
+  font-size: var(--fz-xs);
+  font-weight: 700;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filters-tabcontent-horizontal h4 {
+  width: 100%;
+  font-size: var(--fz-xs);
+  color: #888888;
+  margin: 6px 0 2px;
+}
+
+.filters-group-button {
+  background-color: #222222;
+  color: #f0f0f0;
+  border: 1.5px solid #444444;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fz-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin: 2px;
+}
+
+.filters-group-button:hover { border-color: var(--color-btn-primary-bg); }
+
+.filters-group-button-clicked {
+  background-color: var(--color-btn-primary-bg);
+  color: #111111;
+  border: 1.5px solid #aa8800;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fz-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin: 2px;
+}
+
+.btn-legend {
+  display: block;
+  width: 100%;
+  background-color: var(--color-btn-primary-bg);
+  color: #111111;
+  border: 2px solid #aa8800;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: filter 0.12s;
+}
+
+.btn-legend:hover { filter: brightness(0.9); }

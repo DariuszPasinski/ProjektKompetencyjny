@@ -753,3 +753,301 @@
   background-color: #FF3B30;
   color: #ffffff;
 }
+
+
+/* ============================================================
+   CONTRAST MODE — calendar overrides
+   ============================================================ */
+
+/* Gruba żółta obwódka kalendarza */
+.calendar-wrapper {
+  border: 4px solid #ffff00;
+  background-color: #000000;
+}
+
+.month-nav {
+  background-color: #000000;
+  border-bottom-color: #ffff00;
+}
+
+.month-nav #current-date-paragraph { color: #ffff00; }
+
+.btn-nav {
+  color: #ffff00;
+  border-color: transparent;
+}
+
+.btn-nav:hover {
+  background-color: #222200;
+  border-color: #ffff00;
+}
+
+/* Nagłówek tabeli */
+#calendar-main thead th {
+  background-color: #000000;
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+/* Komórki */
+#calendar-main tbody td {
+  background-color: #000000;
+  border-color: #ffff00;
+}
+
+#calendar-main tbody td > p {
+  color: #ffff00 !important;
+}
+
+.tile-calendar-active   { background-color: #000000; }
+.tile-calendar-inactive { background-color: #111111; }
+.tile-calendar-inactive > p { color: #888800 !important; }
+
+.tile-calendar-today {
+  outline-color: #ffff00;
+}
+
+.tile-calendar-today > p { color: #ffff00 !important; }
+
+/* Legenda */
+#calendar-legend {
+  background-color: #000000;
+  border-color: #ffff00;
+}
+
+.legend-title {
+  color: #ffff00;
+  border-bottom-color: #ffff00;
+}
+
+.legend-item { color: #ffff00; }
+
+/* Panel edytora */
+.editor-panel {
+  background-color: #000000;
+  border-color: #ffff00;
+}
+
+.editor-panel__title {
+  color: #ffff00;
+  border-bottom-color: #ffff00;
+}
+
+.event-form__label { color: #ffff00; }
+.event-form__time-row span { color: #ffff00; }
+
+.event-form__input,
+.event-form__select,
+.event-form__textarea {
+  background-color: #000000;
+  border-color: #ffff00;
+  color: #ffff00;
+}
+
+.event-list__item {
+  background-color: #000000;
+  border-color: #ffff00;
+  color: #ffff00;
+}
+
+/* Popover */
+.event-popover {
+  background: #000000;
+  border: 3px solid #ffff00;
+  box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+}
+
+.popover-header + .popover-body { border-top-color: #444400; }
+.popover-main     { color: #ffff00; }
+.popover-time     { color: #cccc00; }
+.popover-group    { color: #ffff00; }
+.popover-location { color: #ffff00; }
+
+.popover-details {
+  background: #111100;
+  border-color: #666600;
+  color: #ffff00;
+}
+
+.popover-actions { border-top-color: #444400; }
+
+.popover-report-view {
+  background: #1a1100;
+  border-color: #888800;
+  color: #ffff00;
+}
+
+#popover-report-text {
+  background: #0a0a00;
+  border-color: #888800;
+  color: #ffff00;
+}
+
+.semester-day-info { color: #888800; }
+
+/* ============================================================
+   CONTRAST MODE — Filter panel
+   ============================================================ */
+
+#filers-section {
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.filters-tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 2px solid #ffff00;
+  margin-bottom: 12px;
+}
+
+.filters-tablinks-vertical {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #ffff00;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.12s;
+}
+
+.filters-tablinks-vertical:hover { background-color: #222200; }
+
+.filters-tablinks-vertical.active {
+  background-color: #ffff00;
+  color: #000000;
+  font-weight: 700;
+}
+
+.filters-tab .filters-tablinks-vertical:last-child {
+  background-color: #000000;
+  color: #ff4444;
+  border-color: #ff4444;
+  margin-left: auto;
+}
+
+.filters-tab .filters-tablinks-vertical:last-child:hover {
+  background-color: #220000;
+}
+
+.filters-tabcontent-vertical {
+  background-color: #000000;
+  border: 2px solid #ffff00;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filters-tabcontent-vertical h3 {
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  color: #ffff00;
+  letter-spacing: 0.06em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ffff00;
+  margin-bottom: 2px;
+}
+
+.filters-tablinks-horizontal {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #888800;
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: var(--fz-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s;
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.filters-tablinks-horizontal:hover  { border-color: #ffff00; background-color: #111100; }
+.filters-tablinks-horizontal.active {
+  border-color: #ffff00;
+  background-color: #1a1a00;
+  font-weight: 700;
+}
+
+.filters-tabcontent-horizontal {
+  padding: 8px 4px 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.filters-tabcontent-horizontal h3 {
+  width: 100%;
+  font-size: var(--fz-xs);
+  font-weight: 700;
+  color: #cccc00;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filters-tabcontent-horizontal h4 {
+  width: 100%;
+  font-size: var(--fz-xs);
+  color: #cccc00;
+  margin: 6px 0 2px;
+}
+
+.filters-group-button {
+  background-color: #000000;
+  color: #ffff00;
+  border: 2px solid #888800;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fz-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin: 2px;
+}
+
+.filters-group-button:hover { border-color: #ffff00; background-color: #111100; }
+
+.filters-group-button-clicked {
+  background-color: #ffff00;
+  color: #000000;
+  border: 2px solid #ffff00;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: var(--fz-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin: 2px;
+}
+
+.btn-legend {
+  display: block;
+  width: 100%;
+  background-color: #ffff00;
+  color: #000000;
+  border: 3px solid #000000;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: filter 0.12s;
+}
+
+.btn-legend:hover { filter: brightness(0.85); }

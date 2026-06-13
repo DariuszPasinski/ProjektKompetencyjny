@@ -74,6 +74,14 @@ async function _renderCalendarEvents() {
       return;
     }
 
+    if (
+      typeof currentFilter !== 'undefined' &&
+      currentFilter.length > 0 &&
+      !currentFilter.includes(String(ev.studentGroupId))
+    ) {
+      return;
+    }
+
     _eventsCache[ev.id] = ev;
 
     const card = document.querySelector(`#calendar-main .day-card[data-date="${ev.date}"]`);

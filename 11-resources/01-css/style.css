@@ -7,7 +7,7 @@
    ============================================================ */
 :root {
   /* App background */
-  --color-bg-app: #8b1515;
+  --color-bg-app: #b52020;
 
   /* Header gradient */
   --color-header-from: #e87820;
@@ -94,52 +94,61 @@
   --fz-xl:   20px;
 }
 
-/* ---- Dark theme skeleton (activate via JS: document.documentElement.dataset.theme="dark") ---- */
+/* ---- Dark theme (mobile: document.documentElement.dataset.theme="dark") ---- */
 [data-theme="dark"] {
-  --color-bg-app:        #1a0505;
-  --color-bg-card:       #252525;
-  --color-bg-card-inner: #2e2e2e;
+  --color-bg-app:        #8b1515;
+  --color-header-from:   #c05500;
+  --color-header-to:     #000000;
+  --color-bg-card:       #1a1a1a;
+  --color-bg-card-inner: #141414;
   --color-text-on-light: #f0f0f0;
-  --color-text-muted:    #aaaaaa;
-  --color-cell-active:   #2e2e2e;
-  --color-cell-inactive: #1f1f1f;
-  --color-cell-border:   #444444;
-  --color-cell-head-bg:  #333333;
-  --color-cell-head-text:#cccccc;
-  --color-input-bg:      #3a3a3a;
-  --color-input-border:  #555555;
+  --color-text-muted:    #888888;
+  --color-btn-secondary-bg:     #2a2a2a;
+  --color-btn-secondary-border: #666666;
+  --color-btn-secondary-text:   #f0f0f0;
+  --color-input-bg:      #222222;
+  --color-input-border:  #444444;
   --color-input-text:    #f0f0f0;
-  --color-legend-bg:     #252525;
-  --color-legend-border: #444444;
+  --color-cell-active:   #1a1a1a;
+  --color-cell-inactive: #101010;
+  --color-cell-border:   #333333;
+  --color-cell-head-bg:  #111111;
+  --color-cell-head-text:#f0f0f0;
+  --color-legend-bg:     #1a1a1a;
+  --color-legend-border: #333333;
   --color-error-bg:      #3a1010;
   --color-error-text:    #ff8080;
 }
 
-/* ---- High-contrast theme skeleton (activate via JS: document.documentElement.dataset.theme="contrast") ---- */
+/* ---- High-contrast theme (mobile: document.documentElement.dataset.theme="contrast") ---- */
 [data-theme="contrast"] {
   --color-bg-app:             #000000;
   --color-header-from:        #ff6600;
   --color-header-to:          #ffdd00;
-  --color-bg-card:            #ffffff;
-  --color-bg-card-inner:      #ffffff;
-  --color-text-on-light:      #000000;
-  --color-text-muted:         #444444;
+  --color-bg-card:            #000000;
+  --color-bg-card-inner:      #0a0a0a;
+  --color-text-on-light:      #ffff00;
+  --color-text-muted:         #cccc00;
   --color-btn-primary-bg:     #ffff00;
   --color-btn-primary-border: #000000;
   --color-btn-primary-text:   #000000;
-  --color-btn-secondary-bg:     #ffffff;
-  --color-btn-secondary-border: #000000;
-  --color-btn-secondary-text:   #000000;
-  --color-input-bg:           #ffffff;
-  --color-input-border:       #000000;
-  --color-input-text:         #000000;
-  --color-cell-border:        #000000;
-  --color-cell-inactive:      #e8e8e8;
-  --color-cell-head-bg:       #f0f0f0;
-  --color-legend-bg:          #f0f0f0;
-  --color-legend-border:      #000000;
-  --color-error-border:       #000000;
-  --color-error-text:         #000000;
+  --color-btn-secondary-bg:     #000000;
+  --color-btn-secondary-border: #ffff00;
+  --color-btn-secondary-text:   #ffff00;
+  --color-input-bg:           #000000;
+  --color-input-border:       #ffff00;
+  --color-input-text:         #ffff00;
+  --color-input-focus:        #ffff00;
+  --color-cell-active:        #000000;
+  --color-cell-inactive:      #111111;
+  --color-cell-border:        #ffff00;
+  --color-cell-head-bg:       #000000;
+  --color-cell-head-text:     #ffff00;
+  --color-legend-bg:          #000000;
+  --color-legend-border:      #ffff00;
+  --color-error-bg:           #1a1100;
+  --color-error-border:       #ffff00;
+  --color-error-text:         #ffff00;
 }
 
 

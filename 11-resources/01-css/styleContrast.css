@@ -6,65 +6,66 @@
    CSS CUSTOM PROPERTIES
    ============================================================ */
 :root {
-  /* App background */
-  --color-bg-app: #ff5454;
+  /* App background — czarne tło w trybie kontrastowym */
+  --color-bg-app: #000000;
 
-  /* Header gradient */
-  --color-header-from: #e87820;
-  --color-header-to:   #f5cc00;
+  /* Header gradient — pomarańczowy → żółty (kontrastowy) */
+  --color-header-from: #ff6600;
+  --color-header-to:   #ffdd00;
 
-  /* Surfaces */
-  --color-bg-card:       #ffffff;
-  --color-bg-card-inner: #f7f7f7;
+  /* Surfaces — czarny kalendarz */
+  --color-bg-card:       #000000;
+  --color-bg-card-inner: #0a0a0a;
 
   /* Text */
-  --color-text-on-dark:  #ffffff;
-  --color-text-on-light: #222222;
-  --color-text-muted:    #888888;
+  --color-text-on-dark:  #ffff00;
+  --color-text-on-light: #ffff00;
+  --color-text-muted:    #cccc00;
 
   /* Primary button — yellow */
-  --color-btn-primary-bg:     #ffd600;
-  --color-btn-primary-border: #333333;
-  --color-btn-primary-text:   #111111;
+  --color-btn-primary-bg:     #ffff00;
+  --color-btn-primary-border: #000000;
+  --color-btn-primary-text:   #000000;
 
-  /* Secondary button — white */
-  --color-btn-secondary-bg:     #ffffff;
-  --color-btn-secondary-border: #555555;
-  --color-btn-secondary-text:   #222222;
+  /* Secondary button — black/yellow */
+  --color-btn-secondary-bg:     #000000;
+  --color-btn-secondary-border: #ffff00;
+  --color-btn-secondary-text:   #ffff00;
 
   /* Inputs */
-  --color-input-bg:     #f0f0f0;
-  --color-input-border: #cccccc;
-  --color-input-text:   #333333;
-  --color-input-focus:  #ffd600;
+  --color-input-bg:     #000000;
+  --color-input-border: #ffff00;
+  --color-input-text:   #ffff00;
+  --color-input-focus:  #ffff00;
 
-  /* Calendar cells */
-  --color-cell-active:   #ffffff;
-  --color-cell-inactive: #f0d5d5;
-  --color-cell-border:   #dddddd;
-  --color-cell-head-bg:  #f5f5f5;
-  --color-cell-head-text:#333333;
+  /* Calendar cells — czarne z żółtymi krawędziami */
+  --color-cell-active:   #000000;
+  --color-cell-inactive: #111111;
+  --color-cell-border:   #ffff00;
+  --color-cell-head-bg:  #000000;
+  --color-cell-head-text:#ffff00;
 
   /* Event category colours */
-  --color-cat-rektorskie:  #7cc142;
-  --color-cat-dziekanskie: #276221;
-  --color-cat-egzamin:     #e74c3c;
-  --color-cat-kolokwium:   #f5a623;
-  --color-cat-imprezy:     #f06292;
-  --color-cat-inne:        #26c6da;
+  --color-cat-kolokwium:            #f5a623;
+  --color-cat-egzamin:              #e74c3c;
+  --color-cat-innezaliczenie:       #26c6da;
+  --color-cat-wydarzenieuczelniane: #f06292;
+  --color-cat-rektorskie:           #7cc142;
+  --color-cat-dziekanskie:          #276221;
+  --color-cat-innewydarzenie:       #26c6da;
 
   /* Legend */
-  --color-legend-bg:     #f5f5f5;
-  --color-legend-border: #e0e0e0;
+  --color-legend-bg:     #000000;
+  --color-legend-border: #ffff00;
 
   /* Error / status */
-  --color-error-bg:     #fff0f0;
-  --color-error-border: #cc0000;
-  --color-error-text:   #cc0000;
+  --color-error-bg:     #1a1100;
+  --color-error-border: #ffff00;
+  --color-error-text:   #ffff00;
 
   /* Editor badge */
   --color-editor-bg:   #4caf50;
-  --color-editor-text: #ffffff;
+  --color-editor-text: #000000;
 
   /* Sizing & spacing */
   --header-h:          44px;
@@ -74,8 +75,8 @@
   --radius-lg:         14px;
 
   /* Shadows */
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
-  --shadow-btn:  0 2px 4px  rgba(0, 0, 0, 0.20);
+  --shadow-card: 0 4px 24px rgba(255, 255, 0, 0.15);
+  --shadow-btn:  0 2px 4px  rgba(0, 0, 0, 0.40);
 
   /* Typography */
   --font-main:   'Segoe UI', Arial, sans-serif;

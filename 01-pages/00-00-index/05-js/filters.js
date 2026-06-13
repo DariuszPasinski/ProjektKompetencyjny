@@ -3,10 +3,9 @@ let studentGroups;
 document.addEventListener("DOMContentLoaded", async function () {
     const filters = await fetch('get_groups.php');
     studentGroups = await filters.json();
-    //console.log(filters)
-    //console.log(studentGroups)
 
     currentFilter = readFilters();
+    _updateFilterBadge();
     createMenu();
 });
 
@@ -33,7 +32,15 @@ function readFilters() {
 
 function setFilters(filters) {
     localStorage.setItem("filters", JSON.stringify(filters));
+    _updateFilterBadge();
     _renderCalendarEvents();
+}
+
+function _updateFilterBadge() {
+    const btn = document.getElementById("legend-button");
+    if (!btn) return;
+    const count = currentFilter.length;
+    btn.textContent = count > 0 ? `Filtry (${count})` : "Filtry";
 }
 
 function createMenu() {

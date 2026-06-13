@@ -22,27 +22,29 @@ if ($roleName === "ADMIN") {
 
     <base href="../">
 
-    <link rel="stylesheet" href="11-resources/01-css/style.css">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css">
-    <link rel="stylesheet" href="mobile/mobile.css">
+    <link rel="stylesheet" href="11-resources/01-css/style.css?v=2">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=2">
+    <link rel="stylesheet" href="mobile/mobile.css?v=2">
     <link rel="icon" href="11-resources/02-image/Favico.jpg">
 
     <script>
         window.APP_IS_LOGGED_IN = <?php echo $isLoggedIn ? "true" : "false"; ?>;
         window.APP_USER_ID = <?php echo $userId !== null ? $userId : "null"; ?>;
         window.APP_ROLE_NAME = <?php echo json_encode($roleName, JSON_UNESCAPED_UNICODE); ?>;
+        let currentFilter = [];
     </script>
 
-    <script src="01-pages/00-00-index/05-js/index.js"></script>
-    <script src="01-pages/00-00-index/05-js/editor.js"></script>
-    <script src="mobile/mobile.js"></script>
-    <script src="../mobile/mobile.js"></script>
+    <script src="01-pages/00-00-index/05-js/index.js?v=2"></script>
+    <script src="01-pages/00-00-index/05-js/editor.js?v=2"></script>
+    <script src="01-pages/00-00-index/05-js/filters.js?v=2"></script>
+    <script src="mobile/mobile.js?v=2"></script>
 </head>
 <body>
     <header class="app-header">
         <span class="lang-indicator">[PL]</span>
 
         <div class="header-actions" style="margin-left:auto">
+            <button class="btn-login" id="css-button-mobile">Ciemny</button>
             <?php if ($isLoggedIn): ?>
                 <span class="editor-badge <?php echo htmlspecialchars($roleClass); ?>" id="editor-badge">
                     <?php echo htmlspecialchars($roleName); ?>
@@ -164,6 +166,16 @@ if ($roleName === "ADMIN") {
         <div id="mobile-legend-items"></div>
     </div>
 
+    <!-- Panel filtrów mobilnych -->
+    <div class="mobile-filter-panel" id="mobile-filter-panel" hidden>
+        <div class="mobile-filter-handle"></div>
+        <div class="mobile-filter-header">
+            <span class="mobile-filter-title">Filtry grup</span>
+            <button class="mobile-filter-close" id="mobile-filter-close">✕</button>
+        </div>
+        <div id="filers-section" class="mobile-filter-body"></div>
+    </div>
+
     <div id="event-popover" class="event-popover" hidden>
         <div class="popover-header" id="popover-header"></div>
 
@@ -196,12 +208,13 @@ if ($roleName === "ADMIN") {
         <button class="footer-tab tab-btn--active tab-btn" id="tab-calendar">Kalendarz</button>
         <button class="footer-tab tab-btn" id="tab-events">Wydarzenia</button>
         <button class="footer-tab tab-btn" id="tab-assessments">Zaliczenia</button>
-		
+
 		<?php if ($isLoggedIn && ($roleName === "REDAKTOR" || $roleName === "REDACTOR")): ?>
 			<button class="footer-tab tab-btn" id="tab-my-events">Moje wpisy</button>
 		<?php endif; ?>
-		
+
         <button class="footer-tab" id="tab-legend">Legenda</button>
+        <button class="footer-tab" id="tab-filters">Filtry</button>
         <button class="footer-tab tab-btn" id="tab-edit" hidden>Edytuj</button>
     </footer>
 
@@ -222,39 +235,107 @@ if ($roleName === "ADMIN") {
         document.getElementById("next-month-button").addEventListener("click", () => nextMonth());
         document.getElementById("prev-month-button").addEventListener("click", () => prevMonth());
 
+        /* --- Przełącznik motywu --- */
+        (function () {
+            const btn = document.getElementById("css-button-mobile");
+            const themes = ["", "dark", "contrast"];
+            const labels = ["Ciemny", "Kontrast", "Jasny"];
+            let idx = 0;
+
+            const saved = localStorage.getItem("mobile-theme");
+            if (saved) {
+                idx = themes.indexOf(saved);
+                if (idx < 0) idx = 0;
+                document.documentElement.dataset.theme = saved || "";
+                if (!saved) delete document.documentElement.dataset.theme;
+                btn.textContent = labels[idx];
+            }
+
+            btn.addEventListener("click", function () {
+                idx = (idx + 1) % themes.length;
+                const theme = themes[idx];
+                if (theme) {
+                    document.documentElement.dataset.theme = theme;
+                } else {
+                    delete document.documentElement.dataset.theme;
+                }
+                localStorage.setItem("mobile-theme", theme);
+                btn.textContent = labels[idx];
+            });
+        })();
+
+        /* --- Legenda --- */
         document.getElementById("tab-legend").addEventListener("click", function () {
             const panel = document.getElementById("mobile-legend");
+            const filterPanel = document.getElementById("mobile-filter-panel");
 
             const source = document.getElementById("calendar-legend-items");
             const target = document.getElementById("mobile-legend-items");
+            if (source && target) target.innerHTML = source.innerHTML;
 
-            if (source && target) {
-                target.innerHTML = source.innerHTML;
+            if (!filterPanel.hidden) {
+                filterPanel.hidden = true;
+                document.getElementById("tab-filters").classList.remove("footer-tab--active");
             }
 
             panel.hidden = !panel.hidden;
             this.classList.toggle("footer-tab--active", !panel.hidden);
         });
 
-        document.getElementById("tab-edit").addEventListener("click", function () {
+        /* --- Filtry --- */
+        function openMobileFilter() {
+            const panel = document.getElementById("mobile-filter-panel");
             const legend = document.getElementById("mobile-legend");
-
             if (!legend.hidden) {
                 legend.hidden = true;
                 document.getElementById("tab-legend").classList.remove("footer-tab--active");
             }
+            panel.hidden = false;
+            document.getElementById("tab-filters").classList.add("footer-tab--active");
+        }
+
+        function closeMobileFilter() {
+            const panel = document.getElementById("mobile-filter-panel");
+            panel.hidden = true;
+            document.getElementById("tab-filters").classList.remove("footer-tab--active");
+        }
+
+        /* Override openFilter/closeFilter z filters.js dla mobile */
+        function openFilter()  { openMobileFilter(); }
+        function closeFilter() { closeMobileFilter(); }
+
+        document.getElementById("tab-filters").addEventListener("click", function () {
+            const panel = document.getElementById("mobile-filter-panel");
+            if (panel.hidden) {
+                openMobileFilter();
+            } else {
+                closeMobileFilter();
+            }
+        });
+
+        document.getElementById("mobile-filter-close").addEventListener("click", closeMobileFilter);
+
+        document.getElementById("tab-edit").addEventListener("click", function () {
+            const legend = document.getElementById("mobile-legend");
+            const filterPanel = document.getElementById("mobile-filter-panel");
+            if (!legend.hidden) {
+                legend.hidden = true;
+                document.getElementById("tab-legend").classList.remove("footer-tab--active");
+            }
+            if (!filterPanel.hidden) closeMobileFilter();
         });
 
         ["tab-calendar", "tab-events", "tab-assessments"].forEach(id => {
             const btn = document.getElementById(id);
             if (!btn) return;
-
             btn.addEventListener("click", () => {
                 const legend = document.getElementById("mobile-legend");
+                const filterPanel = document.getElementById("mobile-filter-panel");
                 if (!legend.hidden) {
                     legend.hidden = true;
                     document.getElementById("tab-legend").classList.remove("footer-tab--active");
                 }
+                if (!filterPanel.hidden) closeMobileFilter();
             });
         });
     </script>
