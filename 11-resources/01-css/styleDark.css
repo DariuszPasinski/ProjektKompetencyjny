@@ -6,11 +6,11 @@
    CSS CUSTOM PROPERTIES
    ============================================================ */
 :root {
-  /* App background — ciemny motyw: czerwień ta sama co w jasnym */
-  --color-bg-app: #8b1515;
+  /* App background — ciemny motyw: głęboka ciemna czerwień */
+  --color-bg-app: #2e0505;
 
-  /* Header gradient — pomarańczowy → czarny (mniej jaskrawy) */
-  --color-header-from: #c05500;
+  /* Header gradient — ciemny pomarańcz → czarny */
+  --color-header-from: #4a1e00;
   --color-header-to:   #000000;
 
   /* Surfaces — czarny kalendarz */

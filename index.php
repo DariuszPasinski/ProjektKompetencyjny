@@ -16,12 +16,12 @@ if ($isLoggedIn) {
     <title>Kalendarz Akademicki Politechniki Łódzkiej</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="11-resources/01-css/style.css?v=2" class="css-light">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=2" class="css-light">
-    <link rel="stylesheet" href="11-resources/01-css/styleDark.css?v=2" class="css-dark">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarDark.css?v=2" class="css-dark">
-    <link rel="stylesheet" href="11-resources/01-css/styleContrast.css?v=2" class="css-contrast">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarContrast.css?v=2" class="css-contrast">
+    <link rel="stylesheet" href="11-resources/01-css/style.css?v=3" class="css-light">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=3" class="css-light">
+    <link rel="stylesheet" href="11-resources/01-css/styleDark.css?v=3" class="css-dark">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarDark.css?v=3" class="css-dark">
+    <link rel="stylesheet" href="11-resources/01-css/styleContrast.css?v=3" class="css-contrast">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarContrast.css?v=3" class="css-contrast">
     <link rel="icon" href="11-resources/02-image/Favico.jpg">
     <!-- Kolejność ważna: db → auth → index → editor -->
 	<script>
@@ -29,14 +29,14 @@ if ($isLoggedIn) {
 		window.APP_USER_ID = <?php echo $isLoggedIn ? (int)$_SESSION["user_id"] : "null"; ?>;
 		window.APP_ROLE_NAME = "<?php echo $isLoggedIn ? htmlspecialchars($_SESSION["role_name"]) : ""; ?>";
 	</script>
-    <script src="11-resources/05-js/mobile-detect.js?v=2"></script>
-    <script src="11-resources/05-js/stylesheet-change.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/db.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/auth.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/index.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/filters.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/editor.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/legend-color.js?v=2"></script>
+    <script src="11-resources/05-js/mobile-detect.js?v=3"></script>
+    <script src="11-resources/05-js/stylesheet-change.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/db.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/auth.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/index.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/filters.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/editor.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/legend-color.js?v=3"></script>
 </head>
 <body>
     <header class="app-header">

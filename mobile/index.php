@@ -22,9 +22,9 @@ if ($roleName === "ADMIN") {
 
     <base href="../">
 
-    <link rel="stylesheet" href="11-resources/01-css/style.css?v=2">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=2">
-    <link rel="stylesheet" href="mobile/mobile.css?v=2">
+    <link rel="stylesheet" href="11-resources/01-css/style.css?v=3">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=3">
+    <link rel="stylesheet" href="mobile/mobile.css?v=3">
     <link rel="icon" href="11-resources/02-image/Favico.jpg">
 
     <script>
@@ -34,10 +34,10 @@ if ($roleName === "ADMIN") {
         let currentFilter = [];
     </script>
 
-    <script src="01-pages/00-00-index/05-js/index.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/editor.js?v=2"></script>
-    <script src="01-pages/00-00-index/05-js/filters.js?v=2"></script>
-    <script src="mobile/mobile.js?v=2"></script>
+    <script src="01-pages/00-00-index/05-js/index.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/editor.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/filters.js?v=3"></script>
+    <script src="mobile/mobile.js?v=3"></script>
 </head>
 <body>
     <header class="app-header">

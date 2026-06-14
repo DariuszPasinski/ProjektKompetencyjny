@@ -9,9 +9,9 @@
   /* App background — czarne tło w trybie kontrastowym */
   --color-bg-app: #000000;
 
-  /* Header gradient — pomarańczowy → żółty (kontrastowy) */
-  --color-header-from: #ff6600;
-  --color-header-to:   #ffdd00;
+  /* Header — czarny pasek z żółtymi napisami */
+  --color-header-from: #000000;
+  --color-header-to:   #000000;
 
   /* Surfaces — czarny kalendarz */
   --color-bg-card:       #000000;

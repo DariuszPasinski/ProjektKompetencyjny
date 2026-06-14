@@ -856,6 +856,7 @@ main {
 
 [data-theme="dark"] .day-card {
   background-color: #1a1a1a;
+  border-bottom: 1px solid #333333;
 }
 
 [data-theme="dark"] .day-card__num  { color: #f0f0f0; }
