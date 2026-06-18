@@ -22,11 +22,11 @@
      * Mapowanie stron desktop → odpowiedniki mobile.
      * Klucz: fragment pathname strony desktopowej (bez leading slash).
      * Wartość: plik w /mobile/ do którego przekierować.
-     * Jeśli strona nie jest na liście, trafia na /mobile/index.html.
+     * Jeśli strona nie jest na liście, trafia na /mobile/index.php.
      */
     var PAGE_MAP = {
-        "index.html":      "index.html",
-        "00-01-login.html": "login.html",
+        "index.php":      "index.php",
+        "00-01-login.php": "login.php",
     };
 
     // ── Guard: nie przekierowuj jeśli flaga ustawiona ────────────────────────
@@ -48,8 +48,8 @@
     // ── Wyznacz docelowy URL ─────────────────────────────────────────────────
 
     function getMobileUrl() {
-        var currentFile = window.location.pathname.split("/").pop() || "index.html";
-        var targetFile  = PAGE_MAP[currentFile] || "index.html";
+        var currentFile = window.location.pathname.split("/").pop() || "index.php";
+        var targetFile  = PAGE_MAP[currentFile] || "index.php";
         return MOBILE_ROOT + targetFile;
     }
 
