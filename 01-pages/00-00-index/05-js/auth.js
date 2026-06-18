@@ -56,7 +56,7 @@ const Auth = {
 
   /** Czy użytkownik jest aktualnie zalogowany? */
   isLoggedIn() {
-    return !!sessionStorage.getItem(_AUTH_KEY);
+    return window.APP_IS_LOGGED_IN === true;
   },
 
   /** Dane zalogowanego użytkownika lub null */

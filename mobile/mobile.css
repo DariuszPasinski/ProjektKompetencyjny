@@ -1,0 +1,975 @@
+/* ============================================================
+   MOBILE — layout overrides (ładowany po style.css + calendar.css)
+   ============================================================ */
+
+/* iOS safe-area — wartość dolnego paska na iPhone z notch (Home indicator).
+   Używana w padding-bottom przyklejonych do dołu elementów. */
+:root {
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
+/* ============================================================
+   BACKDROP — półprzezroczyste tło pod bottom-sheet / popover
+   ============================================================ */
+.mobile-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.42);
+  z-index: 155;
+  opacity: 0;
+  transition: opacity 0.22s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-sheet-backdrop[hidden] {
+  display: none !important;
+}
+
+.mobile-sheet-backdrop.is-visible {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  min-height: 38px;
+  padding: 0 10px;
+  gap: 8px;
+}
+
+.filters-label {
+  display: none;
+}
+
+.tab-btn {
+  font-size: 11px;
+  padding: 2px 4px;
+}
+
+.btn-login,
+.btn-secondary {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+main {
+  padding: 6px 6px calc(var(--footer-mobile-h, 48px) + 8px);
+  align-items: flex-start;
+}
+
+
+/* ============================================================
+   CALENDAR WRAPPER
+   ============================================================ */
+.calendar-wrapper {
+  border-radius: 8px;
+}
+
+.month-nav {
+  padding: 8px 10px;
+  gap: 8px;
+}
+
+.month-nav #current-date-paragraph {
+  min-width: 130px;
+  font-size: 14px;
+}
+
+.btn-nav {
+  font-size: 18px;
+  padding: 6px 10px;
+}
+
+#calendar-main thead th {
+  font-size: 10px;
+  padding: 5px 1px;
+}
+
+#calendar-main tbody td {
+  height: 52px;
+  padding: 2px 2px 1px;
+}
+
+#calendar-main tbody td > p {
+  font-size: 10px;
+}
+
+.event-tag {
+  font-size: 8px;
+  padding: 1px 2px;
+  margin-bottom: 1px;
+}
+
+/* Legenda sidebar ukryta — jest panel overlay */
+#calendar-legend {
+  display: none !important;
+}
+
+
+/* ============================================================
+   STOPKA MOBILNA — zawsze widoczna
+   ============================================================ */
+.mobile-footer {
+  display: flex;
+}
+
+/* tab-btn--active na przyciskach stopki (editor.js dodaje tę klasę) */
+.mobile-footer .tab-btn--active {
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+
+/* ============================================================
+   PANEL LEGENDY — overlay nad stopką
+   ============================================================ */
+.mobile-legend-panel {
+  position: fixed;
+  bottom: var(--footer-mobile-h, 48px);
+  left: 0;
+  right: 0;
+  background-color: var(--color-legend-bg, #f5f5f5);
+  border-top: 1px solid var(--color-legend-border, #e0e0e0);
+  border-radius: 16px 16px 0 0;
+  padding: 16px 20px calc(16px + var(--safe-bottom));
+  z-index: 150;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-legend-panel[hidden] {
+  display: none !important;
+}
+
+.mobile-legend-panel .legend-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-on-light, #222);
+  border-bottom: 1px solid var(--color-legend-border, #e0e0e0);
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+.mobile-legend-panel .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-text-on-light, #222);
+}
+
+
+/* ============================================================
+   PANEL REDAKTORA — bottom sheet
+   ============================================================ */
+
+@keyframes sheetSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.editor-panel {
+  /* Nadpisz desktop: side panel → mobile: bottom sheet (iOS style) */
+  position: fixed !important;
+  bottom: var(--footer-mobile-h, 48px);
+  left: 0;
+  right: 0;
+  width: 100% !important;
+  height: auto;
+  max-height: 72vh;
+  border-radius: 16px 16px 0 0;
+  border-left: none !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 -8px 28px rgba(0, 0, 0, 0.22);
+  z-index: 160;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Górny padding mniejszy — uchwyt sam dba o odstęp; dolny respektuje safe-area */
+  padding: 6px 16px calc(20px + var(--safe-bottom));
+  background-color: var(--color-bg-card-inner, #f7f7f7);
+  gap: 8px;
+  will-change: transform;
+}
+
+.editor-panel:not([hidden]) {
+  animation: sheetSlideUp 0.32s cubic-bezier(0.32, 0.72, 0.34, 1) both;
+}
+
+/* Klasa dodawana z JS podczas swipe-down do zamknięcia */
+.editor-panel.is-closing {
+  animation: sheetSlideDown 0.22s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes sheetSlideDown {
+  from { transform: translateY(0);        opacity: 1; }
+  to   { transform: translateY(100%);     opacity: 0; }
+}
+
+/* Uchwyt na górze (drag handle iOS-style) — większy target dotykowy */
+.mobile-sheet-handle {
+  width: 40px;
+  height: 5px;
+  background-color: rgba(60, 60, 67, 0.30);
+  border-radius: 3px;
+  margin: 6px auto 8px;
+  flex-shrink: 0;
+  cursor: grab;
+  touch-action: none;
+  /* Niewidzialny większy obszar dotyku wokół */
+  position: relative;
+}
+
+.mobile-sheet-handle::before {
+  content: '';
+  position: absolute;
+  inset: -14px -40px;
+}
+
+.mobile-sheet-handle:active {
+  cursor: grabbing;
+  background-color: rgba(60, 60, 67, 0.50);
+}
+
+.editor-panel__title {
+  font-size: 14px;
+}
+
+/* Lista wydarzeń — kompaktowa */
+.event-list__item {
+  font-size: 13px;
+  padding: 8px 8px;
+}
+
+/* ============================================================
+   FORMULARZ REDAKTORA — dotyk-przyjazny
+   ============================================================ */
+
+/* Wszystkie inputy / selecty / textarea: min 16px (iOS anti-zoom) */
+.event-form__input,
+.event-form__select,
+.event-form__textarea {
+  font-size: 16px;
+  padding: 9px 10px;
+}
+
+.event-form__textarea {
+  min-height: 60px;
+}
+
+/* Przyciski kategorii: większe targety dotykowe */
+.form-kat-btn {
+  padding: 10px 6px;
+  font-size: 11px;
+  min-height: 44px;
+}
+
+/* Banner kategorii */
+.form-kat-banner {
+  font-size: 11px;
+  padding: 8px 12px;
+}
+
+.event-form__label {
+  font-size: 11px;
+}
+
+/* Przyciski ZATWIERDŹ / ODRZUĆ — pełna szerokość palców */
+.btn-confirm,
+.btn-odrzuc {
+  flex: 1;
+  padding: 10px 8px;
+  font-size: 14px;
+}
+
+.event-form-buttons {
+  gap: 10px;
+}
+
+
+/* ============================================================
+   DYMEK (POPOVER) — na mobile: bottom sheet w stylu iOS,
+   wyjeżdża z dołu, na pełną szerokość, ponad backdropem
+   ============================================================ */
+
+/* Nadpisz pozycję ustawioną przez JS z !important */
+.event-popover {
+  left: 0 !important;
+  right: 0 !important;
+  bottom: var(--footer-mobile-h, 48px) !important;
+  top: auto !important;
+  width: 100% !important;
+  max-height: 76vh;
+  border-radius: 16px 16px 0 0;
+  transform-origin: bottom center !important;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 200;
+  padding-bottom: var(--safe-bottom);
+  box-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 -8px 28px rgba(0, 0, 0, 0.26);
+}
+
+/* Animacja: wjazd od dołu (iOS sheet) */
+@keyframes popoverIn {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popoverOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(100%); }
+}
+
+/* Uchwyt na górze popovera (iOS) — dodawany dynamicznie z JS */
+.event-popover .mobile-sheet-handle {
+  margin: 8px auto 4px;
+}
+
+/* Większy padding dla treści popovera na mobile */
+.event-popover .popover-body {
+  padding: 12px 18px 18px;
+}
+
+/* Przyciski akcji w dymku — większe na dotyk */
+.btn-popover-edit,
+.btn-popover-cancel {
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 12px;
+  min-height: 44px;
+}
+
+
+/* ============================================================
+   LOGOWANIE MOBILNE
+   ============================================================ */
+.login-page main {
+  padding: 20px 12px;
+  align-items: center;
+  min-height: calc(100vh - 38px);
+}
+
+.login-card {
+  padding: 28px 20px;
+  max-width: 100%;
+}
+
+.login-title {
+  font-size: 15px;
+}
+
+.login-buttons {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-buttons .btn-primary,
+.login-buttons .btn-secondary {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  font-size: 16px;
+}
+
+/* Inputy logowania: 16px (iOS anti-zoom) */
+.form-input {
+  padding: 12px;
+  font-size: 16px;
+}
+
+
+/* ============================================================
+   WIDOK LISTY DNI — zastępuje siatkę kalendarza
+   ============================================================ */
+
+/* Wrapper: przezroczysty — karty dni na ciemnym tle */
+.calendar-wrapper {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+/* Nawigacja miesiąca: biały tekst na ciemnym tle */
+.month-nav {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.month-nav #current-date-paragraph {
+  color: var(--color-text-on-dark);
+}
+
+.btn-nav {
+  color: var(--color-text-on-dark);
+}
+
+.btn-nav:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Ukryj tabelę zanim JS podmieni ją na listę */
+#calendar-main > table {
+  display: none;
+}
+
+/* Brak minimalnej wysokości sekcji kalendarza */
+#calendar {
+  min-height: unset;
+}
+
+/* Kontener listy dni */
+.day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px 6px 8px;
+}
+
+/* Karta dnia */
+.day-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: var(--color-cell-active);
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-height: 48px;
+}
+
+/* Lewa kolumna: skrót dnia + numer */
+.day-card__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  flex-shrink: 0;
+}
+
+.day-card__abbr {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.day-card__num {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-on-light);
+  line-height: 1;
+}
+
+/* Prawa kolumna: tagi wydarzeń */
+.day-card__events {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 30px;
+}
+
+/* Tagi wydarzeń w kartach — pełna szerokość, czytelniejsze */
+.day-card .event-tag {
+  display: block;
+  font-size: 12px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Zaznaczona karta dnia (tryb redaktora) */
+.day-card.tile-calendar-selected {
+  background-color: #FFE44D !important;
+  box-shadow:
+    inset 0 0 0 3px #FF9500,
+    0 0 12px rgba(255, 149, 0, 0.45);
+}
+
+/* ============================================================
+   DODATKI POD NOWY SYSTEM: role, reporty, dni semestru, stopka
+   ============================================================ */
+
+.editor-badge {
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.editor-badge--redactor {
+  background: #40b95f;
+}
+
+.editor-badge--admin {
+  background: #e53935;
+}
+
+.popover-report-view {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff3cd;
+  border: 1px solid #ffda6a;
+  color: #5c4300;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.popover-report-view strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.btn-popover-report {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 12px;
+  border: none;
+  background: #f0ad4e;
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-popover-report:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.popover-report-form {
+  margin-top: 10px;
+}
+
+.semester-day-info {
+  font-size: 10px;
+  line-height: 1.15;
+  color: #888;
+  text-align: right;
+  margin-left: auto;
+  padding-top: 2px;
+}
+
+.day-card {
+  position: relative;
+}
+
+.day-card .semester-day-info {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+}
+
+.day-card__events {
+  padding-right: 70px;
+}
+
+.mobile-footer {
+  gap: 2px;
+}
+
+.mobile-footer .footer-tab {
+  flex: 1;
+  font-size: 10px;
+  padding: 8px 2px;
+}
+
+.mobile-legend-panel #mobile-legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#form-target-groups-wrapper {
+  font-size: 12px;
+}
+
+#form-target-groups-list label {
+  display: block;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+#form-target-groups-list input {
+  margin-right: 6px;
+}
+
+.header-actions {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: 210px;
+  background: #fff;
+  color: #111;
+  border: 2px solid #111;
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+  z-index: 300;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.user-dropdown strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.user-dropdown div {
+  margin-bottom: 14px;
+}
+
+.btn-logout {
+  display: block;
+  background: #a30f0f;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+/* Naprawa popupa na mobile po desktopowym centrowaniu */
+
+.event-popover {
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    bottom: var(--footer-mobile-h, 48px) !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 80px) !important;
+
+    transform: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    border-radius: 18px 18px 0 0 !important;
+}
+
+.event-tag {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.event-tag-title {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-report-flag {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1;
+}
+
+
+/* ============================================================
+   PANEL FILTRÓW MOBILNYCH
+   ============================================================ */
+.mobile-filter-panel {
+  position: fixed;
+  bottom: var(--footer-mobile-h, 48px);
+  left: 0;
+  right: 0;
+  max-height: 78vh;
+  background-color: var(--color-bg-card, #ffffff);
+  border-top: 1px solid var(--color-cell-border, #dddddd);
+  border-radius: 16px 16px 0 0;
+  padding: 0 16px calc(16px + var(--safe-bottom));
+  z-index: 151;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.24);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mobile-filter-panel[hidden] { display: none !important; }
+
+.mobile-filter-handle {
+  width: 40px;
+  height: 5px;
+  background-color: rgba(60, 60, 67, 0.30);
+  border-radius: 3px;
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.mobile-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 8px;
+  border-bottom: 1px solid var(--color-cell-border, #dddddd);
+  margin-bottom: 10px;
+}
+
+.mobile-filter-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-on-light, #222);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.mobile-filter-close {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  min-height: 32px;
+}
+
+.mobile-filter-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: 8px;
+}
+
+/* Nadpisz styl editor-panel dla sekcji filtrów w mobile */
+#filers-section {
+  position: static !important;
+  width: 100% !important;
+  max-height: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+}
+
+/* Przyciski filtrów — dotyk-friendly */
+.filters-tablinks-vertical {
+  padding: 8px 16px;
+  font-size: 13px;
+  min-height: 36px;
+  touch-action: manipulation;
+}
+
+.filters-tablinks-horizontal {
+  padding: 8px 14px;
+  font-size: 13px;
+  min-height: 40px;
+  touch-action: manipulation;
+}
+
+.filters-group-button,
+.filters-group-button-clicked {
+  padding: 6px 14px;
+  font-size: 12px;
+  min-height: 32px;
+  touch-action: manipulation;
+}
+
+.filters-tab {
+  padding: 10px 0;
+  margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   DARK MODE — mobile overrides (data-theme="dark" on html)
+   ============================================================ */
+[data-theme="dark"] .calendar-wrapper {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .month-nav {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .event-popover {
+  background: #1e1e1e;
+  border: 1px solid #444444;
+}
+
+[data-theme="dark"] .popover-main  { color: #f0f0f0; }
+[data-theme="dark"] .popover-time  { color: #aaaaaa; }
+[data-theme="dark"] .popover-group { color: #e0e0e0; }
+[data-theme="dark"] .popover-location { color: #e0e0e0; }
+
+[data-theme="dark"] .popover-details {
+  background: #2a2a2a;
+  border-color: #444444;
+  color: #cccccc;
+}
+
+[data-theme="dark"] .popover-report-view {
+  background: #3a2800;
+  border-color: #6a4e00;
+  color: #f5c842;
+}
+
+[data-theme="dark"] #popover-report-text {
+  background: #252525;
+  border-color: #444444;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .day-card {
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333333;
+}
+
+[data-theme="dark"] .day-card__num  { color: #f0f0f0; }
+[data-theme="dark"] .day-card__abbr { color: #888888; }
+
+[data-theme="dark"] .mobile-legend-panel {
+  background-color: #1a1a1a;
+  border-color: #333333;
+}
+
+[data-theme="dark"] .mobile-legend-panel .legend-title { color: #f0f0f0; border-color: #333333; }
+[data-theme="dark"] .mobile-legend-panel .legend-item  { color: #f0f0f0; }
+
+[data-theme="dark"] .mobile-filter-panel {
+  background-color: #1a1a1a;
+  border-color: #333333;
+}
+
+[data-theme="dark"] .mobile-filter-title { color: #f0f0f0; }
+[data-theme="dark"] .mobile-filter-header { border-color: #333333; }
+[data-theme="dark"] .mobile-filter-handle { background-color: rgba(255,255,255,0.25); }
+
+[data-theme="dark"] .user-dropdown {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #444444;
+}
+
+[data-theme="dark"] .user-dropdown strong { color: #f0f0f0; }
+[data-theme="dark"] .user-dropdown div    { color: #cccccc; }
+
+
+/* ============================================================
+   CONTRAST MODE — mobile overrides (data-theme="contrast" on html)
+   ============================================================ */
+[data-theme="contrast"] .calendar-wrapper {
+  background-color: #000000;
+  border: 3px solid #ffff00;
+}
+
+[data-theme="contrast"] .month-nav {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+[data-theme="contrast"] .month-nav #current-date-paragraph { color: #ffff00; }
+[data-theme="contrast"] .btn-nav { color: #ffff00; }
+
+[data-theme="contrast"] .day-card {
+  background-color: #000000;
+  border: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .day-card__num  { color: #ffff00; }
+[data-theme="contrast"] .day-card__abbr { color: #cccc00; }
+
+[data-theme="contrast"] .event-popover {
+  background: #000000;
+  border: 3px solid #ffff00;
+}
+
+[data-theme="contrast"] .popover-main     { color: #ffff00; }
+[data-theme="contrast"] .popover-time     { color: #cccc00; }
+[data-theme="contrast"] .popover-group    { color: #ffff00; }
+[data-theme="contrast"] .popover-location { color: #ffff00; }
+
+[data-theme="contrast"] .popover-details {
+  background: #111100;
+  border-color: #666600;
+  color: #ffff00;
+}
+
+[data-theme="contrast"] .popover-report-view {
+  background: #1a1100;
+  border-color: #888800;
+  color: #ffff00;
+}
+
+[data-theme="contrast"] #popover-report-text {
+  background: #0a0a00;
+  border-color: #888800;
+  color: #ffff00;
+}
+
+[data-theme="contrast"] .mobile-legend-panel {
+  background-color: #000000;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .mobile-legend-panel .legend-title { color: #ffff00; border-color: #ffff00; }
+[data-theme="contrast"] .mobile-legend-panel .legend-item  { color: #ffff00; }
+
+[data-theme="contrast"] .mobile-filter-panel {
+  background-color: #000000;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .mobile-filter-title  { color: #ffff00; }
+[data-theme="contrast"] .mobile-filter-header { border-color: #ffff00; }
+[data-theme="contrast"] .mobile-filter-handle { background-color: rgba(255,255,0,0.4); }
+
+[data-theme="contrast"] .mobile-footer {
+  background-color: #000000;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="contrast"] .footer-tab { color: #ffff00; border-color: #ffff00; }
+
+[data-theme="contrast"] .user-dropdown {
+  background: #000000;
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+[data-theme="contrast"] .user-dropdown strong { color: #ffff00; }
+[data-theme="contrast"] .user-dropdown div    { color: #cccc00; }

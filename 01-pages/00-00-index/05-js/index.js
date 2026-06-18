@@ -1,4 +1,4 @@
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 const days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
 
 const tableHTML = [
@@ -12,7 +12,10 @@ function start() {
     year = d[1];
     console.log(month + " " + year);
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
+    //TODO: Add making table from month
+    //TODO: Add geting info from database
     makeCallendar(month);
+    return;
 }
 
 Date.prototype.addDays = function(days) {
@@ -37,7 +40,7 @@ function makeCallendar(month) {
     let endDate = getMonthEndDate(fragmented[0], fragmented[1]);
 
     while (true) {
-        if (startDate.getDay() === 1) {
+        if (startDate.getDay() == 1) {
             table += "<tr>";
         }
 
@@ -45,17 +48,17 @@ function makeCallendar(month) {
         let iso = startDate.getFullYear() + "-"
                 + String(startDate.getMonth() + 1).padStart(2, "0") + "-"
                 + String(day).padStart(2, "0");
-        if (months[startDate.getMonth()] === month) {
+        if (months[startDate.getMonth()] == month) {
             table += "<td class=\"tile-calendar-active\" id=\"" + day + "\" data-date=\"" + iso + "\"><p>" + day + "</p></td>";
         } else {
             table += "<td class=\"tile-calendar-inactive\" id=\"" + day + "\" data-date=\"" + iso + "\"><p>" + day + "</p></td>";
         }
 
-        if (startDate.getDay() === 0) {
+        if (startDate.getDay() == 0) {
             table += "</tr>";
         }
 
-        if (startDate.getDate() === endDate.getDate() && startDate.getMonth() === endDate.getMonth()) {
+        if (startDate.getDate() == endDate.getDate() && startDate.getMonth() == endDate.getMonth()) {
             break;
         }
         startDate = startDate.addDays(1);
@@ -65,19 +68,21 @@ function makeCallendar(month) {
 }
 
 function getMonthStartDate(month, year) {
-    let startDate = new Date("1-" + month + "-" + year); 
-    while (startDate.getDay() !== 1) {
+    const monthIdx = months.indexOf(month);
+    let startDate = new Date(parseInt(year), monthIdx, 1);
+    while (startDate.getDay() != 1) {
         startDate = startDate.addDays(-1);
     }
     return startDate;
 }
 
 function getMonthEndDate(month, year) {
-    let endDate = new Date("27-" + month + "-" + year);
+    const monthIdx = months.indexOf(month);
+    let endDate = new Date(parseInt(year), monthIdx, 27);
     let newMonth = false;
-    while (!(endDate.getDay() === 0 && newMonth === true)) {
+    while (!(endDate.getDay() == 0 && newMonth == true)) {
         endDate = endDate.addDays(1);
-        if (endDate.addDays(1).getMonth() !== endDate.getMonth()) {
+        if (endDate.addDays(1).getMonth() != endDate.getMonth()) {
             newMonth = true;
         }
     }
@@ -86,7 +91,8 @@ function getMonthEndDate(month, year) {
 
 function getCallendarDate() {
     let current = document.getElementById("current-date-paragraph").innerText;
-    return current.split(" ");
+    let fragmented = current.split(" ");
+    return fragmented;
 }
 
 function prevMonth() {
@@ -100,7 +106,7 @@ function prevMonth() {
     }
     let month = months[index];
     let year = -1;
-    if (fragmented[0] === months[0]) {
+    if (fragmented[0] == months[0]) {
         year = parseInt(fragmented[1]) - 1;
     } else {
         year = fragmented[1];
@@ -110,6 +116,7 @@ function prevMonth() {
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
     //console.log("prevMonth() ended");
     makeCallendar(month);
+    return;
 }
 
 function nextMonth() {
@@ -119,7 +126,7 @@ function nextMonth() {
 
     let month = months[(months.indexOf(fragmented[0]) + 1) % 12];
     let year = -1;
-    if (fragmented[0] === months[11]) {
+    if (fragmented[0] == months[11]) {
         year = parseInt(fragmented[1]) + 1;
     } else {
         year = fragmented[1];
@@ -129,6 +136,7 @@ function nextMonth() {
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
     //console.log("nextMonth() ended");
     makeCallendar(month);
+    return;
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -144,10 +152,10 @@ function getCookie(cname) {
     let ca = decodedCookie.split(';');
     for(let i = 0; i <ca.length; i++) {
         let c = ca[i];
-        while (c.charAt(0) === ' ') {
+        while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }   
-        if (c.indexOf(name) === 0) {
+        if (c.indexOf(name) == 0) {
             return c.substring(name.length, c.length);
         }
     }

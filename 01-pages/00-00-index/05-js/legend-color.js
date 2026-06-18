@@ -2,21 +2,27 @@ let legendClass = null;
 
 // Mapowanie klasy legend-dot na CSS variable używaną w całym projekcie
 const legendDotToCssVar = {
-    "legend-dot--rektorskie"  : "--color-cat-rektorskie",
-    "legend-dot--dziekanskie" : "--color-cat-dziekanskie",
-    "legend-dot--egzamin"     : "--color-cat-egzamin",
-    "legend-dot--kolokwium"   : "--color-cat-kolokwium",
-    "legend-dot--imprezy"     : "--color-cat-imprezy",
-    "legend-dot--inne"        : "--color-cat-inne"
+    "legend-dot--kolokwium"             : "--color-cat-kolokwium",
+    "legend-dot--egzamin"               : "--color-cat-egzamin",
+    "legend-dot--innezaliczenie"        : "--color-cat-innezaliczenie",
+    "legend-dot--wydarzenieuczelniane"  : "--color-cat-wydarzenieuczelniane",
+    "legend-dot--godzinyrektorskie"     : "--color-cat-rektorskie",
+    "legend-dot--godzinydziekanskie"    : "--color-cat-dziekanskie",
+    "legend-dot--innewydarzenie"        : "--color-cat-innewydarzenie"
 }
 
+// const events = await fetch('get_events_types.php');
+// const assessments = await fetch('get_assessments_types.php');
+// legend = [...await events.json(), ...await assessments.json()];
+
 const colorsDefault = {
-    "legend-dot--rektorskie"  : "#7CC142",
-    "legend-dot--dziekanskie" : "#276221",
-    "legend-dot--egzamin"     : "#E74C3C",
-    "legend-dot--kolokwium"   : "#FFFF00",
-    "legend-dot--imprezy"     : "#F06292",
-    "legend-dot--inne"        : "#26C6DA"
+    "legend-dot--kolokwium"             : "#f5a623",
+    "legend-dot--egzamin"               : "#e74c3c",
+    "legend-dot--innezaliczenie"        : "#26c6da",
+    "legend-dot--wydarzenieuczelniane"  : "#f06292",
+    "legend-dot--godzinyrektorskie"     : "#7cc142",
+    "legend-dot--godzinydziekanskie"    : "#276221",
+    "legend-dot--innewydarzenie"        : "#26c6da"
 }
 
 let colorsFromMemory = null;
@@ -55,6 +61,7 @@ function colorRead() {
 // Działa dla WSZYSTKICH elementów — obecnych i przyszłych (eventy z bazy, tagi, itp.)
 function colorSet(legendDotClass, color) {
     const cssVar = legendDotToCssVar[legendDotClass];
+    console.log(cssVar);
     if (!cssVar) return;
 
     // Usuń ewentualne "FF" na końcu (format z poprzedniej wersji)

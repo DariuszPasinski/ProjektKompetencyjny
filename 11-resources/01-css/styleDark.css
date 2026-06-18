@@ -6,20 +6,20 @@
    CSS CUSTOM PROPERTIES
    ============================================================ */
 :root {
-  /* App background */
-  --color-bg-app: #340101;
+  /* App background — ciemny motyw: głęboka ciemna czerwień */
+  --color-bg-app: #2e0505;
 
-  /* Header gradient */
-  --color-header-from: #e87820;
-  --color-header-to:   #f5cc00;
+  /* Header gradient — ciemny pomarańcz → czarny */
+  --color-header-from: #4a1e00;
+  --color-header-to:   #000000;
 
-  /* Surfaces */
-  --color-bg-card:       #ffffff;
-  --color-bg-card-inner: #f7f7f7;
+  /* Surfaces — czarny kalendarz */
+  --color-bg-card:       #1a1a1a;
+  --color-bg-card-inner: #141414;
 
   /* Text */
   --color-text-on-dark:  #ffffff;
-  --color-text-on-light: #222222;
+  --color-text-on-light: #f0f0f0;
   --color-text-muted:    #888888;
 
   /* Primary button — yellow */
@@ -27,40 +27,41 @@
   --color-btn-primary-border: #333333;
   --color-btn-primary-text:   #111111;
 
-  /* Secondary button — white */
-  --color-btn-secondary-bg:     #ffffff;
-  --color-btn-secondary-border: #555555;
-  --color-btn-secondary-text:   #222222;
+  /* Secondary button — dark */
+  --color-btn-secondary-bg:     #2a2a2a;
+  --color-btn-secondary-border: #666666;
+  --color-btn-secondary-text:   #f0f0f0;
 
   /* Inputs */
-  --color-input-bg:     #f0f0f0;
-  --color-input-border: #cccccc;
-  --color-input-text:   #333333;
+  --color-input-bg:     #222222;
+  --color-input-border: #444444;
+  --color-input-text:   #f0f0f0;
   --color-input-focus:  #ffd600;
 
-  /* Calendar cells */
-  --color-cell-active:   #ffffff;
-  --color-cell-inactive: #f0d5d5;
-  --color-cell-border:   #dddddd;
-  --color-cell-head-bg:  #f5f5f5;
-  --color-cell-head-text:#333333;
+  /* Calendar cells — czarne, tekst biały */
+  --color-cell-active:   #1a1a1a;
+  --color-cell-inactive: #101010;
+  --color-cell-border:   #333333;
+  --color-cell-head-bg:  #111111;
+  --color-cell-head-text:#f0f0f0;
 
   /* Event category colours */
-  --color-cat-rektorskie:  #7cc142;
-  --color-cat-dziekanskie: #276221;
-  --color-cat-egzamin:     #e74c3c;
-  --color-cat-kolokwium:   #f5a623;
-  --color-cat-imprezy:     #f06292;
-  --color-cat-inne:        #26c6da;
+  --color-cat-kolokwium:            #f5a623;
+  --color-cat-egzamin:              #e74c3c;
+  --color-cat-innezaliczenie:       #26c6da;
+  --color-cat-wydarzenieuczelniane: #f06292;
+  --color-cat-rektorskie:           #7cc142;
+  --color-cat-dziekanskie:          #276221;
+  --color-cat-innewydarzenie:       #26c6da;
 
   /* Legend */
-  --color-legend-bg:     #f5f5f5;
-  --color-legend-border: #e0e0e0;
+  --color-legend-bg:     #1a1a1a;
+  --color-legend-border: #333333;
 
   /* Error / status */
-  --color-error-bg:     #fff0f0;
+  --color-error-bg:     #3a1010;
   --color-error-border: #cc0000;
-  --color-error-text:   #cc0000;
+  --color-error-text:   #ff8080;
 
   /* Editor badge */
   --color-editor-bg:   #4caf50;
@@ -74,8 +75,8 @@
   --radius-lg:         14px;
 
   /* Shadows */
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
-  --shadow-btn:  0 2px 4px  rgba(0, 0, 0, 0.20);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.60);
+  --shadow-btn:  0 2px 4px  rgba(0, 0, 0, 0.40);
 
   /* Typography */
   --font-main:   'Segoe UI', Arial, sans-serif;
@@ -90,10 +91,15 @@
 /* ---- Dark theme skeleton (activate via JS: document.documentElement.dataset.theme="dark") ---- */
 [data-theme="dark"] {
   --color-bg-app:        #1a0505;
+  --color-header-from:   #c05500;
+  --color-header-to:     #000000;
   --color-bg-card:       #252525;
   --color-bg-card-inner: #2e2e2e;
   --color-text-on-light: #f0f0f0;
   --color-text-muted:    #aaaaaa;
+  --color-btn-secondary-bg:     #2a2a2a;
+  --color-btn-secondary-border: #666666;
+  --color-btn-secondary-text:   #f0f0f0;
   --color-cell-active:   #2e2e2e;
   --color-cell-inactive: #1f1f1f;
   --color-cell-border:   #444444;
@@ -126,11 +132,15 @@
   --color-input-bg:           #ffffff;
   --color-input-border:       #000000;
   --color-input-text:         #000000;
-  --color-cell-border:        #000000;
+  --color-input-focus:        #ffff00;
+  --color-cell-active:        #000000;
   --color-cell-inactive:      #e8e8e8;
+  --color-cell-border:        #000000;
   --color-cell-head-bg:       #f0f0f0;
+  --color-cell-head-text:     #ffff00;
   --color-legend-bg:          #f0f0f0;
   --color-legend-border:      #000000;
+  --color-error-bg:           #1a1100;
   --color-error-border:       #000000;
   --color-error-text:         #000000;
 }
@@ -522,4 +532,52 @@ main {
     padding: 6px 12px;
     font-size: var(--fz-sm);
   }
+}
+
+/* ============================================================
+   LOGOUT
+   ============================================================ */
+.user-menu {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  min-width: 180px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.user-dropdown-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.user-dropdown-logout {
+  display: block;
+  text-decoration: none;
+  color: white;
+  background: #991111;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.user-dropdown-name {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.user-dropdown-role {
+  color: black;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 14px;
 }
