@@ -338,9 +338,17 @@ function _createTypeButton(type, entryType) {
   btn.dataset.id = type.id;
   btn.dataset.entryType = entryType;
 
-  if (type.color) {
-    btn.style.backgroundColor = type.color;
+  let classes = {
+    "Kolokwium"             : "form-kat-btn--kolokwium",
+    "Egzamin"               : "form-kat-btn--egzamin",
+    "Inne zaliczenie"       : "form-kat-btn--innezaliczenie",
+    "Wydarzenie uczelniane" : "form-kat-btn--wydarzenieuczelniane",
+    "Godziny rektorskie" : "form-kat-btn--rektorskie",
+    "Godziny dziekańskie"   : "form-kat-btn--dziekanskie",
+    "Inne wydarzenie"       : "form-kat-btn--innewydarzenie",
   }
+
+  btn.classList.add(classes[type.name])
 
   btn.addEventListener('click', () => _selectEntryType(type, entryType));
 
@@ -361,9 +369,20 @@ function _selectEntryType(type, entryType) {
   banner.textContent = type.name.toUpperCase();
   banner.hidden = false;
 
-  if (type.color) {
-    banner.style.backgroundColor = type.color;
+  let classes = {
+    "Kolokwium"             : "form-kat-banner--kolokwium",
+    "Egzamin"               : "form-kat-banner--egzamin",
+    "Inne zaliczenie"       : "form-kat-banner--innezaliczenie",
+    "Wydarzenie uczelniane" : "form-kat-banner--wydarzenieuczelniane",
+    "Godziny rektorskie" : "form-kat-banner--rektorskie",
+    "Godziny dziekańskie"   : "form-kat-banner--dziekanskie",
+    "Inne wydarzenie"       : "form-kat-banner--innewydarzenie",
   }
+
+  banner.classList.add(classes[type.name]);
+  // if (type.color) {
+  //   banner.style.backgroundColor = type.color;
+  // }
 
   document.getElementById('form-title-label').hidden = entryType !== 'university';
   document.getElementById('form-assessment-fields').hidden = entryType !== 'assessment';
@@ -489,6 +508,16 @@ async function _renderCalendarEvents() {
   const res = await fetch(`event-list.php?year=${year}&month=${monthIdx}`);
   const events = await res.json();
 
+  let classes = {
+    "Kolokwium"             : "event-tag--kolokwium",
+    "Egzamin"               : "event-tag--egzamin",
+    "Inne zaliczenie"       : "event-tag--innezaliczenie",
+    "Wydarzenie uczelniane" : "event-tag--wydarzenieuczelniane",
+    "Godziny rektorskie" : "event-tag--rektorskie",
+    "Godziny dziekańskie"   : "event-tag--dziekanskie",
+    "Inne wydarzenie"       : "event-tag--innewydarzenie",
+  }
+
   events.forEach(ev => {
 
     if (_calendarFilter === 'university' && ev.source !== 'university') return;
@@ -522,9 +551,8 @@ async function _renderCalendarEvents() {
       tag.textContent = `${ev.timeStart} ${ev.title}`;
     }
 
-    if (ev.color) {
-      tag.style.backgroundColor = ev.color;
-    }
+
+    tag.classList.add(classes[ev.typeName]);
 
     cell.appendChild(tag);
   });
@@ -537,14 +565,25 @@ function _showPopover(ev, anchorTag) {
   const popover = document.getElementById('event-popover');
   const header = document.getElementById('popover-header');
 
+  let classes = {
+    "Kolokwium"             : "popover-header--kolokwium",
+    "Egzamin"               : "popover-header--egzamin",
+    "Inne zaliczenie"       : "popover-header--innezaliczenie",
+    "Wydarzenie uczelniane" : "popover-header--wydarzenieuczelniane",
+    "Godziny rektorskie" : "popover-header--rektorskie",
+    "Godziny dziekańskie"   : "popover-header--dziekanskie",
+    "Inne wydarzenie"       : "popover-header--innewydarzenie"
+  }
+
   document.querySelectorAll('.popover-lecturer').forEach(el => el.remove());
 
   header.textContent = ev.typeName.toUpperCase();
   header.className = 'popover-header';
 
-  if (ev.color) {
-    header.style.backgroundColor = ev.color;
-  }
+  header.classList.add(classes[ev.typeName])
+  // if (ev.color) {
+  //   header.style.backgroundColor = ev.color;
+  // }
 
   document.getElementById('popover-main').textContent = ev.title;
 
@@ -633,6 +672,7 @@ function _hidePopover() {
   _popoverEvent = null;
 
   const popover = document.getElementById('event-popover');
+  popover.classList.remove()
   popover.classList.add('event-popover--closing');
 
   popover.addEventListener('animationend', () => {
@@ -666,12 +706,34 @@ function _renderLegend() {
     item.classList.add('legend-item');
     item.classList.add(current);
 
+    // let classes = {
+    //   "Kolokwium"             : ["form-kat-btn--kolokwium",            "form-kat-banner--kolokwium",            "event-list__dot--kolokwium",            "popover-header--kolokwium"],
+    //   "Egzamin"               : ["form-kat-btn--egzamin",              "form-kat-banner--egzamin",              "event-list__dot--egzamin",              "popover-header--egzamin"],
+    //   "Inne zaliczenie"       : ["form-kat-btn--innezaliczenie",       "form-kat-banner--innezaliczenie",       "event-list__dot--innezaliczenie",       "popover-header--innezaliczenie"],
+    //   "Wydarzenie uczelniane" : ["form-kat-btn--wydarzenieuczelniane", "form-kat-banner--wydarzenieuczelniane", "event-list__dot--wydarzenieuczelniane", "popover-header--wydarzenieuczelniane"],
+    //   "Godziny rektorskie" : ["form-kat-btn--rektorskie",           "form-kat-banner--rektorskie",            "event-list__dot--rektorskie",          "popover-header--rektorskie"],
+    //   "Godziny dziekańskie"   : ["form-kat-btn--dziekanskie",          "form-kat-banner--dziekanskie",           "event-list__dot--dziekanskie",         "popover-header--dziekanskie"],
+    //   "Inne wydarzenie"       : ["form-kat-btn--innewydarzenie",       "form-kat-banner--innewydarzenie",        "event-list__dot--innewydarzenie",      "popover-header--innewydarzenie"]
+    // }
+
+    let classes = {
+      "Kolokwium"             : "legend-dot--kolokwium",
+      "Egzamin"               : "legend-dot--egzamin",
+      "Inne zaliczenie"       : "legend-dot--innezaliczenie",
+      "Wydarzenie uczelniane" : "legend-dot--wydarzenieuczelniane",
+      "Godziny rektorskie" : "legend-dot--rektorskie",
+      "Godziny dziekańskie"   : "legend-dot--dziekanskie",
+      "Inne wydarzenie"       : "legend-dot--innewydarzenie",
+    }
+
     const dot = document.createElement('span');
     dot.classList.add('legend-dot');
-    dot.classList.add('legend-dot--' + type.name.normalize('NFKD').replace(/[^\w]/g, '').replace(/\s/g, "").toLowerCase());
-    dot.style.backgroundColor = type.color || '#999';
+    dot.classList.add(classes[type.name]);
+    //dot.classList.add('legend-dot--' + type.name.normalize('NFKD').replace(/[^\w]/g, '').replace(/\s/g, "").toLowerCase());
+    //dot.style.backgroundColor = type.color || '#999';
     dot.addEventListener("click", function () {
       currentColor = dot.classList[1];
+      document.getElementsByClassName("color-title")[0].innerHTML = "COLOR: " + type.name;
       openPicker();
     })
 
@@ -733,7 +795,18 @@ function _editEvent() {
   const banner = document.getElementById('form-kat-banner');
   banner.textContent = typeObj.name.toUpperCase();
   banner.hidden = false;
-  if (typeObj.color) banner.style.backgroundColor = typeObj.color;
+
+  let classes = {
+    "Kolokwium"             : "form-kat-banner--kolokwium",
+    "Egzamin"               : "form-kat-banner--egzamin",
+    "Inne zaliczenie"       : "form-kat-banner--innezaliczenie",
+    "Wydarzenie uczelniane" : "form-kat-banner--wydarzenieuczelniane",
+    "Godziny rektorskie" : "form-kat-banner--rektorskie",
+    "Godziny dziekańskie"   : "form-kat-banner--dziekanskie",
+    "Inne wydarzenie"       : "form-kat-banner--innewydarzenie",
+  }
+  banner.classList.add(classes[typeObj.name])
+  //if (typeObj.color) banner.style.backgroundColor = typeObj.color;
 
   document.getElementById('form-title-label').hidden = ev.source !== 'university';
   document.getElementById('form-assessment-fields').hidden = ev.source !== 'assessment';

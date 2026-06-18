@@ -61,7 +61,6 @@ function colorRead() {
 // Działa dla WSZYSTKICH elementów — obecnych i przyszłych (eventy z bazy, tagi, itp.)
 function colorSet(legendDotClass, color) {
     const cssVar = legendDotToCssVar[legendDotClass];
-    console.log(cssVar);
     if (!cssVar) return;
 
     // Usuń ewentualne "FF" na końcu (format z poprzedniej wersji)

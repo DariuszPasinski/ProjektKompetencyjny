@@ -12,8 +12,6 @@ function start() {
     year = d[1];
     console.log(month + " " + year);
     document.getElementById("current-date-paragraph").innerText = month + " " + year;
-    //TODO: Add making table from month
-    //TODO: Add geting info from database
     makeCallendar(month);
     return;
 }
