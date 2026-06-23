@@ -41,11 +41,47 @@ function _updateFilterBadge() {
     if (!btn) return;
     const count = currentFilter.length;
     btn.textContent = count > 0 ? `Filtry (${count})` : "Filtry";
+    _updateCurrentFilters();
+}
+
+// Update list of current groups in filters
+function _updateCurrentFilters() {
+    const list = document.getElementById("filters-list");
+    if (list == null) {
+        return
+    }
+    list.innerHTML = "";
+    const filters = readFilters()
+    list.hidden = filters.length === 0;
+    filters.forEach(function (groupId) {
+        const button = document.createElement("button");
+        const group = studentGroups.find(g => g.id === parseInt(groupId));
+        button.classList.add("filters-tablinks-vertical");
+        button.innerHTML = group.name;
+        button.addEventListener("click", function () {
+            toggleGroupButton("Group:" + groupId);
+            _updateCurrentFilters();
+        });
+
+        document.getElementById("Group:" + groupId).classList.remove("filters-group-button");
+        document.getElementById("Group:" + groupId).classList.add("filters-group-button-clicked");
+
+        list.appendChild(button);
+    });
+    const buttonX = document.createElement("button");
+    buttonX.classList.add("filters-tablinks-vertical");
+    list.appendChild(buttonX);
+    buttonX.hidden = true;
 }
 
 function createMenu() {
     while (studentGroups == null) {}
     const filters = document.getElementById("filers-section");
+
+    const currentFilters = document.createElement("div");
+    currentFilters.className = "filters-tab";
+    currentFilters.id = "filters-list";
+    filters.appendChild(currentFilters);
 
     const filtersTab = document.createElement("div");
     filtersTab.className = "filters-tab";
@@ -53,6 +89,8 @@ function createMenu() {
 
     const semestry = [...new Set(studentGroups.map(g => g.semester))].sort((a, b) => a - b);
     createVerticalMenu(filters, filtersTab, semestry);
+
+    _updateCurrentFilters();
 
     return null;
 }
@@ -128,7 +166,6 @@ function createHorizontalMenu(section, semestr) {
         title.innerText = kierunek.field_of_study;
         div.appendChild(title);
 
-        // console.log(semestr + " " + kierunek.field_of_study + " " + kierunek.group_types.length);
        if (kierunek.group_types.length === 1) {
             // Nie ma podziału na specjalizacje
             let groups = studentGroups.filter(g =>
@@ -143,7 +180,6 @@ function createHorizontalMenu(section, semestr) {
                g.field_of_study === kierunek.field_of_study &&
                g.group_type_id === 2
            );
-           // console.log(groups);
            createGroupButtons(div, groups);
 
            let electives = studentGroups.filter(g =>
@@ -151,25 +187,12 @@ function createHorizontalMenu(section, semestr) {
                g.field_of_study === kierunek.field_of_study &&
                g.group_type_id === 3
            );
-           // console.log(electives);
            if (electives.length > 0) {
-               // console.log(electives.length);
                const specializationTitle = document.createElement("h4");
                specializationTitle.innerText = "Przedmioty obieralne";
                div.appendChild(specializationTitle);
                createGroupButtons(div, electives);
            }
-
-           // electives.forEach(elective => {
-           //     let groupButton = document.createElement("button");
-           //     groupButton.innerHTML = elective.name;
-           //     groupButton.id = "Przedmiot Obieralny:" + elective.id;
-           //     groupButton.classList.add("filters-group-button");
-           //     groupButton.addEventListener("click", function () {
-           //         toggleGroupButton(groupButton.id);
-           //     });
-           //     div.appendChild(groupButton);
-           // })
        }
     });
 
