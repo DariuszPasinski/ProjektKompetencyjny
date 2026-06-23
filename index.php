@@ -17,11 +17,11 @@ if ($isLoggedIn) {
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="11-resources/01-css/style.css?v=4" class="css-light">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=4" class="css-light">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendar.css?v=5" class="css-light">
     <link rel="stylesheet" href="11-resources/01-css/styleDark.css?v=4" class="css-dark">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarDark.css?v=4" class="css-dark">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarDark.css?v=5" class="css-dark">
     <link rel="stylesheet" href="11-resources/01-css/styleContrast.css?v=4" class="css-contrast">
-    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarContrast.css?v=4" class="css-contrast">
+    <link rel="stylesheet" href="01-pages/00-00-index/01-css/calendarContrast.css?v=5" class="css-contrast">
     <link rel="icon" href="11-resources/02-image/Favico.jpg">
     <!-- Kolejność ważna: db → auth → index → editor -->
 	<script>
@@ -35,8 +35,8 @@ if ($isLoggedIn) {
     <script src="01-pages/00-00-index/05-js/auth.js?v=4"></script>
     <script src="01-pages/00-00-index/05-js/index.js?v=4"></script>
     <script src="01-pages/00-00-index/05-js/filters.js?v=4"></script>
-    <script src="01-pages/00-00-index/05-js/editor.js?v=5"></script>
-    <script src="01-pages/00-00-index/05-js/legend-color.js?v=4"></script>
+    <script src="01-pages/00-00-index/05-js/editor.js?v=6"></script>
+    <script src="01-pages/00-00-index/05-js/legend-color.js?v=5"></script>
 </head>
 <body>
     <header class="app-header">
@@ -134,12 +134,26 @@ if ($isLoggedIn) {
 
                 <section id="calendar-color" class="editor-panel" hidden>
                     <h3 class="color-title">COLOR</h3>
-                    <div class="legend-item">
-                        <label class="legend-dot legend-dot--color" for="color-input"></label>
-                        <input type="color" class="color-input" id="color-input" value="#000000"><br>
-                        <button class="btn-color" id="color-confirm">Zatwierdź</button>
-                        <button id="color-exit">Wyjdź</button>
-                        <button id="color-default">Przywróć domyślny</button>
+
+                    <!-- Widok pickera koloru -->
+                    <div id="color-picker-view">
+                        <div class="color-picker-preview">
+                            <label class="legend-dot legend-dot--color" for="color-input"></label>
+                            <input type="color" class="color-input" id="color-input" value="#000000">
+                        </div>
+                        <div class="color-picker-buttons">
+                            <button class="btn-color-confirm" id="color-confirm">Zatwierdź</button>
+                            <button class="btn-color-default" id="color-default">Przywróć domyślny</button>
+                            <button class="btn-color-exit" id="color-exit">Wyjdź</button>
+                            <button class="btn-color-icon" id="color-icon">+ Dodaj ikonę</button>
+                        </div>
+                    </div>
+
+                    <!-- Widok pickera ikon -->
+                    <div id="icon-picker-view" hidden>
+                        <h4 class="icon-picker-title">Wybierz ikonę</h4>
+                        <div class="icon-picker-grid" id="icon-picker-grid"></div>
+                        <button class="btn-color-back" id="icon-picker-back" type="button">← Wróć do koloru</button>
                     </div>
                 </section>
 
@@ -265,6 +279,7 @@ if ($isLoggedIn) {
         {
             start();
             colorRead();
+            iconRead();
 
             disableStylesheet(document.getElementsByClassName("css-dark")[0]);
             disableStylesheet(document.getElementsByClassName("css-dark")[1]);
@@ -276,22 +291,27 @@ if ($isLoggedIn) {
         document.getElementById("color-exit").addEventListener("click", function () {
             currentColor = null;
             closePicker();
-        })
+        });
         document.getElementById("color-confirm").addEventListener("click", function () {
-            // console.log("ButtonPressed");
             colorEdit(currentColor);
-            //colorSet(currentColor, document.getElementById("color-input").value);
             currentColor = null;
             closePicker();
         });
         document.getElementById("color-default").addEventListener("click", function () {
             colorRestoreToDefault(currentColor);
-            //colorSet(currentColor, document.getElementById("color-input").value);
             currentColor = null;
             closePicker();
         });
+        document.getElementById("color-icon").addEventListener("click", function () {
+            openIconPicker();
+        });
+        document.getElementById("icon-picker-back").addEventListener("click", function () {
+            closeIconPicker();
+        });
+        document.getElementById("color-input").addEventListener("input", function () {
+            _updateColorPreview();
+        });
         document.addEventListener("calendarRendered", function() {
-            // console.log("calendarRendered");
             colorRead();
         });
 

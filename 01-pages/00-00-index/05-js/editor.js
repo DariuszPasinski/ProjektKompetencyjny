@@ -37,16 +37,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   document.getElementById('tab-events')?.addEventListener('click', async () => {
+    _exitEditModeIfActive();
     await _setCalendarFilter('university');
     _setLegendVisibility(false, true);
   });
 
   document.getElementById('tab-assessments')?.addEventListener('click', async () => {
+    _exitEditModeIfActive();
     await _setCalendarFilter('assessment');
     _setLegendVisibility(true, false);
   });
 
   document.getElementById('tab-my-events')?.addEventListener('click', async () => {
+    _exitEditModeIfActive();
     await _setCalendarFilter('mine');
   });
 
@@ -235,6 +238,16 @@ function _enterEditingMode() {
   document.getElementById('calendar-legend').hidden = true;
   document.getElementById('editor-panel').hidden = false;
   _setupCellClickHandlers();
+}
+
+// Wychodzi z trybu edycji jeśli jest aktywny (bez przełączania aktywnej zakładki)
+function _exitEditModeIfActive() {
+  if (document.getElementById('editor-panel').hidden) return;
+  document.getElementById('tab-edit').classList.remove('tab-btn--active');
+  document.getElementById('calendar-legend').hidden = false;
+  document.getElementById('editor-panel').hidden = true;
+  _clearCellSelection();
+  _closeForm(false);
 }
 
 function _leaveEditingMode() {
@@ -556,6 +569,8 @@ async function _renderCalendarEvents() {
 
     cell.appendChild(tag);
   });
+
+  if (typeof iconApplyToTags === 'function') iconApplyToTags();
 }
 
 function _showPopover(ev, anchorTag) {
@@ -577,7 +592,8 @@ function _showPopover(ev, anchorTag) {
 
   document.querySelectorAll('.popover-lecturer').forEach(el => el.remove());
 
-  header.textContent = ev.typeName.toUpperCase();
+  const iconChar = (typeof iconGetCharForType === 'function') ? iconGetCharForType(ev.typeName) : '';
+  header.textContent = iconChar ? iconChar + '  ' + ev.typeName.toUpperCase() : ev.typeName.toUpperCase();
   header.className = 'popover-header';
 
   header.classList.add(classes[ev.typeName])
@@ -742,6 +758,8 @@ function _renderLegend() {
 
     legend.appendChild(item);
   });
+
+  if (typeof iconApplyToLegend === 'function') iconApplyToLegend();
 }
 
 function _editEvent() {
