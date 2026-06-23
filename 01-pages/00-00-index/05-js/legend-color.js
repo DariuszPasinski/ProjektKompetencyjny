@@ -33,6 +33,7 @@ function colorEdit(legendClassIn) {
         colorsFromMemory = { ...colorsDefault };
     }
     const hex = document.getElementById("color-input").value;
+    console.log(hex);
     colorsFromMemory[legendClassIn] = hex;
     localStorage.setItem("colors", JSON.stringify(colorsFromMemory));
     colorSet(legendClassIn, hex);
@@ -55,6 +56,22 @@ function colorRead() {
     Object.keys(colorsFromMemory).forEach(function(key) {
         colorSet(key, colorsFromMemory[key]);
     });
+}
+
+function colorReset(legendClassIn) {
+    if (colorsFromMemory == null) {
+        colorsFromMemory = { ...colorsDefault };
+    }
+    document.getElementById("color-input").value = colorsFromMemory[legendClassIn];
+}
+
+function colorRestoreToDefault(legendClassIn) {
+    if (colorsFromMemory == null) {
+        colorsFromMemory = { ...colorsDefault };
+    }
+    const color = colorsDefault[legendClassIn];
+    document.getElementById("color-input").value = color;
+    colorEdit(legendClassIn);
 }
 
 // Ustaw kolor przez nadpisanie CSS variable na :root

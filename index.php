@@ -139,6 +139,7 @@ if ($isLoggedIn) {
                         <input type="color" class="color-input" id="color-input" value="#000000"><br>
                         <button class="btn-color" id="color-confirm">Zatwierdź</button>
                         <button id="color-exit">Wyjdź</button>
+                        <button id="color-default">Przywróć domyślny</button>
                     </div>
                 </section>
 
@@ -279,6 +280,12 @@ if ($isLoggedIn) {
         document.getElementById("color-confirm").addEventListener("click", function () {
             // console.log("ButtonPressed");
             colorEdit(currentColor);
+            //colorSet(currentColor, document.getElementById("color-input").value);
+            currentColor = null;
+            closePicker();
+        });
+        document.getElementById("color-default").addEventListener("click", function () {
+            colorRestoreToDefault(currentColor);
             //colorSet(currentColor, document.getElementById("color-input").value);
             currentColor = null;
             closePicker();
