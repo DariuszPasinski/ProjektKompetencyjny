@@ -333,24 +333,37 @@
 }
 .btn-color-default:hover { filter: brightness(0.92); }
 
-/* Wyjdź — subtelny */
+/* Powrót na stronę główną — czarny, pogrubiony */
 .btn-color-exit {
   width: 100%;
-  padding: 6px 12px;
-  background: none;
-  color: var(--color-text-muted);
-  border: 1.5px solid var(--color-cell-border);
+  padding: 8px 12px;
+  background: #111111;
+  color: #ffffff;
+  border: 2px solid #000000;
   border-radius: var(--radius-sm);
-  font-size: var(--fz-xs);
-  font-weight: 600;
+  font-size: var(--fz-sm);
+  font-weight: 800;
   font-family: var(--font-main);
   cursor: pointer;
-  transition: color 0.12s, border-color 0.12s;
+  transition: filter 0.12s;
 }
-.btn-color-exit:hover {
-  color: var(--color-text-on-light);
-  border-color: var(--color-text-on-light);
+.btn-color-exit:hover { filter: brightness(1.25); }
+
+/* Usuń ikonę — czerwony */
+.btn-color-remove-icon {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: #ffffff;
+  border: 2px solid #b02a37;
+  border-radius: var(--radius-sm);
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: filter 0.12s;
 }
+.btn-color-remove-icon:hover { filter: brightness(1.08); }
 
 /* Dodaj ikonę — secondary */
 .btn-color-icon {

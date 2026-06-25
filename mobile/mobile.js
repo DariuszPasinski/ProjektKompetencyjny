@@ -58,6 +58,16 @@ async function _renderCalendarEvents() {
   const res = await fetch(`event-list.php?year=${year}&month=${monthIdx}`);
   const events = await res.json();
 
+  const tagClasses = {
+    "Kolokwium"             : "event-tag--kolokwium",
+    "Egzamin"               : "event-tag--egzamin",
+    "Inne zaliczenie"       : "event-tag--innezaliczenie",
+    "Wydarzenie uczelniane" : "event-tag--wydarzenieuczelniane",
+    "Godziny rektorskie"    : "event-tag--rektorskie",
+    "Godziny dziekańskie"   : "event-tag--dziekanskie",
+    "Inne wydarzenie"       : "event-tag--innewydarzenie",
+  };
+
   events.forEach(ev => {
     if (_calendarFilter === 'university' && ev.source !== 'university') {
       return;
@@ -103,12 +113,14 @@ async function _renderCalendarEvents() {
       tag.textContent = `${ev.timeStart} ${ev.title}`;
     }
 
-    if (ev.color) {
-      tag.style.backgroundColor = ev.color;
+    if (tagClasses[ev.typeName]) {
+      tag.classList.add(tagClasses[ev.typeName]);
     }
 
     eventsDiv.appendChild(tag);
   });
+
+  if (typeof iconApplyToTags === 'function') iconApplyToTags();
 }
 
 async function _renderSemesterDays() {

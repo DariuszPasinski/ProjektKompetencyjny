@@ -1,13 +1,12 @@
 let legendClass = null;
 
-// Mapowanie klasy legend-dot na CSS variable używaną w całym projekcie
 const legendDotToCssVar = {
     "legend-dot--kolokwium"             : "--color-cat-kolokwium",
     "legend-dot--egzamin"               : "--color-cat-egzamin",
     "legend-dot--innezaliczenie"        : "--color-cat-innezaliczenie",
     "legend-dot--wydarzenieuczelniane"  : "--color-cat-wydarzenieuczelniane",
-    "legend-dot--godzinyrektorskie"     : "--color-cat-rektorskie",
-    "legend-dot--godzinydziekanskie"    : "--color-cat-dziekanskie",
+    "legend-dot--rektorskie"            : "--color-cat-rektorskie",
+    "legend-dot--dziekanskie"           : "--color-cat-dziekanskie",
     "legend-dot--innewydarzenie"        : "--color-cat-innewydarzenie"
 }
 
@@ -16,49 +15,39 @@ const colorsDefault = {
     "legend-dot--egzamin"               : "#e74c3c",
     "legend-dot--innezaliczenie"        : "#26c6da",
     "legend-dot--wydarzenieuczelniane"  : "#f06292",
-    "legend-dot--godzinyrektorskie"     : "#7cc142",
-    "legend-dot--godzinydziekanskie"    : "#276221",
+    "legend-dot--rektorskie"            : "#7cc142",
+    "legend-dot--dziekanskie"           : "#276221",
     "legend-dot--innewydarzenie"        : "#26c6da"
 }
 
 let colorsFromMemory = null;
 
-// ============================================================
-//   IKONY — 30 ikon podzielonych na 7 kategorii (~4-5 na kat.)
-// ============================================================
 const ICONS = [
-    // Kolokwium (5)
     { key: 'pencil',      label: 'Ołówek',       char: '✏️' },
     { key: 'clipboard',   label: 'Notatnik',     char: '📋' },
     { key: 'book',        label: 'Książka',      char: '📚' },
     { key: 'ruler',       label: 'Linijka',      char: '📏' },
     { key: 'calculator',  label: 'Kalkulator',   char: '🧮' },
-    // Egzamin (4)
     { key: 'mortarboard', label: 'Dyplom',       char: '🎓' },
     { key: 'scroll',      label: 'Certyfikat',   char: '📜' },
     { key: 'glasses',     label: 'Okulary',      char: '👓' },
     { key: 'hourglass',   label: 'Klepsydra',    char: '⌛' },
-    // Inne zaliczenie (4)
     { key: 'check',       label: 'Zaliczone',    char: '✅' },
     { key: 'star',        label: 'Gwiazdka',     char: '⭐' },
     { key: 'medal',       label: 'Medal',        char: '🏅' },
     { key: 'thumbsup',    label: 'Kciuk w górę', char: '👍' },
-    // Wydarzenie uczelniane (4)
     { key: 'calendar',    label: 'Kalendarz',    char: '📅' },
     { key: 'building',    label: 'Budynek',      char: '🏛️' },
     { key: 'people',      label: 'Ludzie',       char: '👥' },
     { key: 'flag',        label: 'Flaga',        char: '🚩' },
-    // Godziny rektorskie (4)
     { key: 'crown',       label: 'Korona',       char: '👑' },
     { key: 'briefcase',   label: 'Teczka',       char: '💼' },
     { key: 'hammer',      label: 'Młotek',       char: '🔨' },
     { key: 'tie',         label: 'Krawat',       char: '👔' },
-    // Godziny dziekańskie (4)
     { key: 'shield',      label: 'Tarcza',       char: '🛡️' },
     { key: 'key',         label: 'Klucz',        char: '🔑' },
     { key: 'lock',        label: 'Kłódka',       char: '🔒' },
     { key: 'badge',       label: 'Odznaka',      char: '🪪' },
-    // Inne wydarzenie (5)
     { key: 'bell',        label: 'Dzwonek',      char: '🔔' },
     { key: 'lightbulb',   label: 'Żarówka',      char: '💡' },
     { key: 'info',        label: 'Info',         char: '❕' },
@@ -66,29 +55,41 @@ const ICONS = [
     { key: 'heart',       label: 'Serce',        char: '❤️' },
 ];
 
-// Map legendDotClass → icon key (np. { "legend-dot--kolokwium": "pencil" })
 let iconsFromMemory = {};
 
-// Mapowanie event-tag class → legend-dot class
 const tagClassToLegendClass = {
     'event-tag--kolokwium':             'legend-dot--kolokwium',
     'event-tag--egzamin':               'legend-dot--egzamin',
     'event-tag--innezaliczenie':        'legend-dot--innezaliczenie',
     'event-tag--wydarzenieuczelniane':  'legend-dot--wydarzenieuczelniane',
-    'event-tag--rektorskie':            'legend-dot--godzinyrektorskie',
-    'event-tag--dziekanskie':           'legend-dot--godzinydziekanskie',
+    'event-tag--rektorskie':            'legend-dot--rektorskie',
+    'event-tag--dziekanskie':           'legend-dot--dziekanskie',
     'event-tag--innewydarzenie':        'legend-dot--innewydarzenie',
 };
 
 // ============================================================
-//   KOLOR — funkcje
+//   HELPER — active color input (desktop or mobile)
+// ============================================================
+
+function _colorInputEl() {
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    if (mobilePanel && !mobilePanel.hidden) {
+        return document.getElementById("mobile-color-input");
+    }
+    return document.getElementById("color-input");
+}
+
+// ============================================================
+//   KOLOR
 // ============================================================
 
 function colorEdit(legendClassIn) {
     if (colorsFromMemory == null) {
         colorsFromMemory = { ...colorsDefault };
     }
-    const hex = document.getElementById("color-input").value;
+    const el = _colorInputEl();
+    if (!el) return;
+    const hex = el.value;
     colorsFromMemory[legendClassIn] = hex;
     localStorage.setItem("colors", JSON.stringify(colorsFromMemory));
     colorSet(legendClassIn, hex);
@@ -116,7 +117,8 @@ function colorReset(legendClassIn) {
     if (colorsFromMemory == null) {
         colorsFromMemory = { ...colorsDefault };
     }
-    document.getElementById("color-input").value = colorsFromMemory[legendClassIn];
+    const el = _colorInputEl();
+    if (el) el.value = colorsFromMemory[legendClassIn] || colorsDefault[legendClassIn] || '#000000';
 }
 
 function colorRestoreToDefault(legendClassIn) {
@@ -124,7 +126,8 @@ function colorRestoreToDefault(legendClassIn) {
         colorsFromMemory = { ...colorsDefault };
     }
     const color = colorsDefault[legendClassIn];
-    document.getElementById("color-input").value = color;
+    const el = _colorInputEl();
+    if (el) el.value = color;
     colorEdit(legendClassIn);
 }
 
@@ -140,7 +143,7 @@ function colorSet(legendDotClass, color) {
 }
 
 // ============================================================
-//   IKONY — funkcje
+//   IKONY
 // ============================================================
 
 function iconRead() {
@@ -170,37 +173,34 @@ function iconGetChar(iconKey) {
     return icon ? icon.char : '';
 }
 
-// Zwraca emoji ikony dla podanej nazwy kategorii (typeName z API)
 function iconGetCharForType(typeName) {
     const typeToLegendClass = {
         "Kolokwium"             : "legend-dot--kolokwium",
         "Egzamin"               : "legend-dot--egzamin",
         "Inne zaliczenie"       : "legend-dot--innezaliczenie",
         "Wydarzenie uczelniane" : "legend-dot--wydarzenieuczelniane",
-        "Godziny rektorskie"    : "legend-dot--godzinyrektorskie",
-        "Godziny dziekańskie"   : "legend-dot--godzinydziekanskie",
+        "Godziny rektorskie"    : "legend-dot--rektorskie",
+        "Godziny dziekańskie"   : "legend-dot--dziekanskie",
         "Inne wydarzenie"       : "legend-dot--innewydarzenie",
     };
-    const legendClass = typeToLegendClass[typeName];
-    if (!legendClass) return '';
-    const iconKey = iconsFromMemory[legendClass];
+    const lc = typeToLegendClass[typeName];
+    if (!lc) return '';
+    const iconKey = iconsFromMemory[lc];
     return iconKey ? iconGetChar(iconKey) : '';
 }
 
-// Odświeża ikony na kropkach legendy (wywoływane po _renderLegend)
 function iconApplyToLegend() {
     document.querySelectorAll('.legend-item').forEach(item => {
         const dot = item.querySelector('.legend-dot');
         if (!dot) return;
 
-        const legendClass = Object.keys(legendDotToCssVar).find(cls => dot.classList.contains(cls));
-        if (!legendClass) return;
+        const lc = Object.keys(legendDotToCssVar).find(cls => dot.classList.contains(cls));
+        if (!lc) return;
 
-        // Usuń poprzednią ikonę jeśli była
         const existing = item.querySelector('.legend-dot-icon');
         if (existing) existing.remove();
 
-        const iconKey = iconsFromMemory[legendClass];
+        const iconKey = iconsFromMemory[lc];
         if (iconKey) {
             const iconEl = document.createElement('span');
             iconEl.className = 'legend-dot-icon';
@@ -210,15 +210,13 @@ function iconApplyToLegend() {
     });
 }
 
-// Odświeża ikony na tagach eventów w kalendarzu (wywoływane po _renderCalendarEvents)
 function iconApplyToTags() {
     document.querySelectorAll('.event-tag').forEach(tag => {
-        // Usuń poprzednią ikonę jeśli była
         tag.querySelectorAll('.event-tag-icon').forEach(el => el.remove());
 
-        for (const [tagClass, legendClass] of Object.entries(tagClassToLegendClass)) {
+        for (const [tagClass, lc] of Object.entries(tagClassToLegendClass)) {
             if (tag.classList.contains(tagClass)) {
-                const iconKey = iconsFromMemory[legendClass];
+                const iconKey = iconsFromMemory[lc];
                 if (iconKey) {
                     const char = iconGetChar(iconKey);
                     const iconSpan = document.createElement('span');
@@ -233,71 +231,108 @@ function iconApplyToTags() {
 }
 
 // ============================================================
-//   PICKER — otwieranie/zamykanie
+//   ICON BUTTON STATE
+// ============================================================
+
+function _updateIconButtonState() {
+    const hasIcon = !!(currentColor && iconsFromMemory[currentColor]);
+
+    ['color-icon', 'mobile-color-icon'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.textContent = hasIcon ? '✎ Edytuj ikonę' : '+ Dodaj ikonę';
+    });
+
+    ['color-remove-icon', 'mobile-color-remove-icon'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.hidden = !hasIcon;
+    });
+}
+
+// ============================================================
+//   PICKER — otwieranie/zamykanie (desktop + mobile)
 // ============================================================
 
 function openPicker() {
-    document.getElementById("calendar-legend").hidden = true;
-    document.getElementById("calendar-color").hidden = false;
-    // Upewnij się że widoczny jest color-picker-view, nie icon-picker-view
-    document.getElementById("color-picker-view").hidden = false;
-    document.getElementById("icon-picker-view").hidden = true;
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    if (mobilePanel) {
+        mobilePanel.hidden = false;
+        document.getElementById("mobile-color-picker-view").hidden = false;
+        document.getElementById("mobile-icon-picker-view").hidden = true;
+    } else {
+        document.getElementById("calendar-legend").hidden = true;
+        document.getElementById("calendar-color").hidden = false;
+        document.getElementById("color-picker-view").hidden = false;
+        document.getElementById("icon-picker-view").hidden = true;
+    }
 
-    // Ustaw kolor input na aktualny kolor kategorii i zaktualizuj podgląd
     if (currentColor) {
         colorReset(currentColor);
         _updateColorPreview();
     }
+
+    _updateIconButtonState();
 }
 
 function closePicker() {
-    document.getElementById("calendar-legend").hidden = false;
-    document.getElementById("calendar-color").hidden = true;
-    document.getElementById("icon-picker-view").hidden = true;
-    document.getElementById("color-picker-view").hidden = false;
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    if (mobilePanel) {
+        mobilePanel.hidden = true;
+    } else {
+        document.getElementById("calendar-legend").hidden = false;
+        document.getElementById("calendar-color").hidden = true;
+        document.getElementById("icon-picker-view").hidden = true;
+        document.getElementById("color-picker-view").hidden = false;
+    }
 }
 
 function openIconPicker() {
-    document.getElementById("color-picker-view").hidden = true;
-    document.getElementById("icon-picker-view").hidden = false;
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    if (mobilePanel && !mobilePanel.hidden) {
+        document.getElementById("mobile-color-picker-view").hidden = true;
+        document.getElementById("mobile-icon-picker-view").hidden = false;
+    } else {
+        document.getElementById("color-picker-view").hidden = true;
+        document.getElementById("icon-picker-view").hidden = false;
+    }
     _renderIconPicker();
 }
 
 function closeIconPicker() {
-    document.getElementById("icon-picker-view").hidden = true;
-    document.getElementById("color-picker-view").hidden = false;
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    if (mobilePanel && !mobilePanel.hidden) {
+        document.getElementById("mobile-icon-picker-view").hidden = true;
+        document.getElementById("mobile-color-picker-view").hidden = false;
+    } else {
+        document.getElementById("icon-picker-view").hidden = true;
+        document.getElementById("color-picker-view").hidden = false;
+    }
 }
 
 function _updateColorPreview() {
-    const previewDot = document.querySelector(".legend-dot--color");
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    let previewDot;
+    if (mobilePanel && !mobilePanel.hidden) {
+        previewDot = mobilePanel.querySelector(".legend-dot--color");
+    } else {
+        const desktopPanel = document.getElementById("color-picker-view");
+        previewDot = desktopPanel ? desktopPanel.querySelector(".legend-dot--color") : null;
+    }
     if (previewDot) {
-        previewDot.style.backgroundColor = document.getElementById("color-input").value;
+        const el = _colorInputEl();
+        if (el) previewDot.style.backgroundColor = el.value;
     }
 }
 
 function _renderIconPicker() {
-    const grid = document.getElementById("icon-picker-grid");
+    const mobilePanel = document.getElementById("mobile-color-panel");
+    const isMobile = mobilePanel && !mobilePanel.hidden;
+    const gridId = isMobile ? "mobile-icon-picker-grid" : "icon-picker-grid";
+    const grid = document.getElementById(gridId);
     if (!grid) return;
     grid.innerHTML = '';
 
     const currentIconKey = currentColor ? iconsFromMemory[currentColor] : null;
 
-    // Przycisk "Brak"
-    const noneBtn = document.createElement('button');
-    noneBtn.className = 'icon-picker-btn icon-picker-btn--none' + (!currentIconKey ? ' icon-picker-btn--selected' : '');
-    noneBtn.type = 'button';
-    noneBtn.innerHTML = '<span class="icon-picker-char">—</span><span class="icon-picker-label">Brak</span>';
-    noneBtn.title = 'Brak ikony';
-    noneBtn.addEventListener('click', () => {
-        iconSave(currentColor, null);
-        iconApplyToLegend();
-        iconApplyToTags();
-        currentColor = null;
-        closePicker();
-    });
-    grid.appendChild(noneBtn);
-
-    // 30 ikon
     ICONS.forEach(icon => {
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -308,8 +343,8 @@ function _renderIconPicker() {
             iconSave(currentColor, icon.key);
             iconApplyToLegend();
             iconApplyToTags();
-            currentColor = null;
-            closePicker();
+            closeIconPicker();
+            _updateIconButtonState();
         });
         grid.appendChild(btn);
     });

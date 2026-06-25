@@ -144,8 +144,9 @@ if ($isLoggedIn) {
                         <div class="color-picker-buttons">
                             <button class="btn-color-confirm" id="color-confirm">Zatwierdź</button>
                             <button class="btn-color-default" id="color-default">Przywróć domyślny</button>
-                            <button class="btn-color-exit" id="color-exit">Wyjdź</button>
                             <button class="btn-color-icon" id="color-icon">+ Dodaj ikonę</button>
+                            <button class="btn-color-remove-icon" id="color-remove-icon" hidden>Usuń ikonę</button>
+                            <button class="btn-color-exit" id="color-exit">Powrót na stronę główną</button>
                         </div>
                     </div>
 
@@ -304,6 +305,12 @@ if ($isLoggedIn) {
         });
         document.getElementById("color-icon").addEventListener("click", function () {
             openIconPicker();
+        });
+        document.getElementById("color-remove-icon").addEventListener("click", function () {
+            iconSave(currentColor, null);
+            iconApplyToLegend();
+            iconApplyToTags();
+            _updateIconButtonState();
         });
         document.getElementById("icon-picker-back").addEventListener("click", function () {
             closeIconPicker();

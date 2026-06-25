@@ -38,6 +38,7 @@ if ($roleName === "ADMIN") {
     <script src="01-pages/00-00-index/05-js/editor.js?v=3"></script>
     <script src="01-pages/00-00-index/05-js/filters.js?v=3"></script>
     <script src="mobile/mobile.js?v=3"></script>
+    <script src="01-pages/00-00-index/05-js/legend-color.js?v=5"></script>
 </head>
 <body>
     <header class="app-header">
@@ -162,8 +163,34 @@ if ($roleName === "ADMIN") {
     <div class="mobile-sheet-backdrop" id="mobile-sheet-backdrop" hidden></div>
 
     <div class="mobile-legend-panel" id="mobile-legend" hidden>
-        <div class="legend-title">LEGENDA</div>
+        <div class="mobile-sheet-handle" id="mobile-legend-handle"></div>
         <div id="mobile-legend-items"></div>
+    </div>
+
+    <!-- Panel color pickera mobilnego -->
+    <div class="mobile-color-panel" id="mobile-color-panel" hidden>
+        <div class="mobile-sheet-handle" id="mobile-color-handle"></div>
+        <h3 class="color-title" id="mobile-color-title">KOLOR</h3>
+
+        <div id="mobile-color-picker-view">
+            <div class="color-picker-preview">
+                <label class="legend-dot legend-dot--color" for="mobile-color-input"></label>
+                <input type="color" class="color-input" id="mobile-color-input" value="#000000">
+            </div>
+            <div class="color-picker-buttons">
+                <button class="btn-color-confirm" id="mobile-color-confirm">Zatwierdź</button>
+                <button class="btn-color-default" id="mobile-color-default">Przywróć domyślny</button>
+                <button class="btn-color-icon" id="mobile-color-icon">+ Dodaj ikonę</button>
+                <button class="btn-color-remove-icon" id="mobile-color-remove-icon" hidden>Usuń ikonę</button>
+                <button class="btn-color-exit" id="mobile-color-exit">Powrót na stronę główną</button>
+            </div>
+        </div>
+
+        <div id="mobile-icon-picker-view" hidden>
+            <h4 class="icon-picker-title">Wybierz ikonę</h4>
+            <div class="icon-picker-grid" id="mobile-icon-picker-grid"></div>
+            <button class="btn-color-back" id="mobile-icon-picker-back" type="button">← Wróć do koloru</button>
+        </div>
     </div>
 
     <!-- Panel filtrów mobilnych -->
@@ -219,7 +246,92 @@ if ($roleName === "ADMIN") {
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => start());
+        let currentColor = null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            colorRead();
+            iconRead();
+            start();
+
+            /* --- Swipe-to-close: panel legendy --- */
+            _setupSwipeToClose(
+                document.getElementById('mobile-legend-handle'),
+                document.getElementById('mobile-legend'),
+                () => {
+                    document.getElementById('mobile-legend').hidden = true;
+                    document.getElementById('tab-legend').classList.remove("footer-tab--active");
+                }
+            );
+
+            /* --- Swipe-to-close: panel color pickera --- */
+            _setupSwipeToClose(
+                document.getElementById('mobile-color-handle'),
+                document.getElementById('mobile-color-panel'),
+                () => {
+                    currentColor = null;
+                    closePicker();
+                }
+            );
+
+            /* --- Delegacja kliknięć na kropki w mobilnej legendzie --- */
+            document.getElementById('mobile-legend-items').addEventListener('click', function(e) {
+                const dot = e.target.closest('.legend-dot');
+                if (!dot || dot.classList.contains('legend-dot--color')) return;
+
+                const lc = Array.from(dot.classList)
+                    .find(cls => typeof legendDotToCssVar !== 'undefined' && legendDotToCssVar[cls]);
+                if (!lc) return;
+
+                const item = dot.closest('.legend-item');
+                let typeName = '';
+                if (item) {
+                    const textNode = Array.from(item.childNodes)
+                        .find(n => n.nodeType === 3 && n.textContent.trim());
+                    typeName = textNode ? textNode.textContent.trim() : '';
+                }
+
+                currentColor = lc;
+                const titleEl = document.getElementsByClassName('color-title')[0];
+                if (titleEl) titleEl.textContent = 'KOLOR: ' + typeName;
+
+                openPicker();
+            });
+
+            document.addEventListener("calendarRendered", function() {
+                colorRead();
+            });
+        });
+
+        /* --- Color picker mobilny — przyciski --- */
+        document.getElementById("mobile-color-confirm").addEventListener("click", function () {
+            colorEdit(currentColor);
+            currentColor = null;
+            closePicker();
+        });
+        document.getElementById("mobile-color-default").addEventListener("click", function () {
+            colorRestoreToDefault(currentColor);
+            currentColor = null;
+            closePicker();
+        });
+        document.getElementById("mobile-color-exit").addEventListener("click", function () {
+            currentColor = null;
+            closePicker();
+        });
+        document.getElementById("mobile-color-icon").addEventListener("click", function () {
+            openIconPicker();
+        });
+        document.getElementById("mobile-color-remove-icon").addEventListener("click", function () {
+            iconSave(currentColor, null);
+            iconApplyToLegend();
+            iconApplyToTags();
+            _updateIconButtonState();
+        });
+        document.getElementById("mobile-icon-picker-back").addEventListener("click", function () {
+            closeIconPicker();
+        });
+        document.getElementById("mobile-color-input").addEventListener("input", function () {
+            _updateColorPreview();
+        });
 
         <?php if ($isLoggedIn): ?>
 		document.getElementById("user-menu-button").addEventListener("click", function () {
