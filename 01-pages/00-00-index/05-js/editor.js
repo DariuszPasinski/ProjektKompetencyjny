@@ -393,9 +393,6 @@ function _selectEntryType(type, entryType) {
   }
 
   banner.classList.add(classes[type.name]);
-  // if (type.color) {
-  //   banner.style.backgroundColor = type.color;
-  // }
 
   document.getElementById('form-title-label').hidden = entryType !== 'university';
   document.getElementById('form-assessment-fields').hidden = entryType !== 'assessment';
@@ -544,7 +541,7 @@ async function _renderCalendarEvents() {
     }
 
     // Sprawdza czy jest w filtrze
-    if (currentFilter.length > 0 && !currentFilter.includes(String(ev.studentGroupId))) return;
+    if (ev.studentGroupId != null && currentFilter.length > 0 && !currentFilter.includes(String(ev.studentGroupId))) return;
 
     _eventsCache[ev.id] = ev;
 
