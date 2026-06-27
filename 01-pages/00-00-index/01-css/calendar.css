@@ -10,7 +10,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   width: 100%;
-  max-width: 960px;
+  max-width: 70vw;
   overflow: hidden;
   color: var(--color-text-on-light);
 }
