@@ -10,6 +10,16 @@ const legendDotToCssVar = {
     "legend-dot--innewydarzenie"        : "--color-cat-innewydarzenie"
 }
 
+const legendDotToCssTextColor = {
+    "legend-dot--kolokwium"             : "--color-cat-kolokwium-text",
+    "legend-dot--egzamin"               : "--color-cat-egzamin-text",
+    "legend-dot--innezaliczenie"        : "--color-cat-innezaliczenie-text",
+    "legend-dot--wydarzenieuczelniane"  : "--color-cat-wydarzenieuczelniane-text",
+    "legend-dot--rektorskie"            : "--color-cat-rektorskie-text",
+    "legend-dot--dziekanskie"           : "--color-cat-dziekanskie-text",
+    "legend-dot--innewydarzenie"        : "--color-cat-innewydarzenie-text"
+}
+
 const colorsDefault = {
     "legend-dot--kolokwium"             : "#f5a623",
     "legend-dot--egzamin"               : "#e74c3c",
@@ -133,13 +143,24 @@ function colorRestoreToDefault(legendClassIn) {
 
 function colorSet(legendDotClass, color) {
     const cssVar = legendDotToCssVar[legendDotClass];
+    const cssTextVar = legendDotToCssTextColor[legendDotClass];
     if (!cssVar) return;
 
     const cleanColor = color.length === 9 && color.endsWith("FF")
         ? color.slice(0, 7)
         : color;
 
+    let cleanTextColor;
+    if (isLightColor(cleanColor)) {
+        cleanTextColor = "black";
+    } else {
+        cleanTextColor = "white";
+    }
+
+    console.log(isLightColor(cleanColor));
+
     document.documentElement.style.setProperty(cssVar, cleanColor);
+    document.documentElement.style.setProperty(cssTextVar, cleanTextColor);
 }
 
 // ============================================================
@@ -348,4 +369,41 @@ function _renderIconPicker() {
         });
         grid.appendChild(btn);
     });
+}
+
+/**
+ * Determine if a color is a light color
+ * @see https://gist.github.com/krabs-github/ec56e4f1c12cddf86ae9c551aa9d9e04
+ */
+function isLightColor(color) {
+    let r, g, b;
+
+    // Check the format of the color, HEX or RGB?
+    if (color.match(/^rgb/)) {
+        // If HEX --> store the red, green, blue values in separate variables
+        const rgb = color.match(
+            /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
+        );
+
+        r = rgb[1];
+        g = rgb[2];
+        b = rgb[3];
+    } else {
+        // If RGB --> Convert it to HEX: http://gist.github.com/983661
+        const hexColor = +(
+            '0x' + color.slice(1).replace(color.length < 5 && /./g, '$&$&')
+        );
+
+        r = hexColor >> 16;
+        g = (hexColor >> 8) & 255;
+        b = hexColor & 255;
+    }
+
+    // HSP equation from http://alienryderflex.com/hsp.html
+    const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+
+    // Using the HSP value, determine whether the color is light or dark
+    // > 127.5 is 'light', <= 127.5 is 'dark'
+
+    return hsp > 127.5;
 }

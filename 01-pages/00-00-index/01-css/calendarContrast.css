@@ -10,7 +10,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   width: 100%;
-  max-width: 960px;
+  max-width: 70vw;
   overflow: hidden;
   color: var(--color-text-on-light);
 }
@@ -189,16 +189,13 @@
   letter-spacing: 0.02em;
 }
 
-.event-tag--kolokwium   {
-  background-color: var(--color-cat-kolokwium);
-  color: var(--color-text-on-light);
-}
-.event-tag--egzamin               { background-color: var(--color-cat-egzamin); }
-.event-tag--innezaliczenie        { background-color: var(--color-cat-innezaliczenie)}
-.event-tag--dziekanskie           { background-color: var(--color-cat-dziekanskie); }
-.event-tag--rektorskie            { background-color: var(--color-cat-rektorskie); }
-.event-tag--wydarzenieuczelniane  { background-color: var(--color-cat-wydarzenieuczelniane); }
-.event-tag--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); }
+.event-tag--kolokwium             {background-color: var(--color-cat-kolokwium);              color: var(--color-cat-kolokwium-text);}
+.event-tag--egzamin               { background-color: var(--color-cat-egzamin);               color: var(--color-cat-egzamin-text);}
+.event-tag--innezaliczenie        { background-color: var(--color-cat-innezaliczenie);        color: var(--color-cat-innezaliczenie-text);}
+.event-tag--dziekanskie           { background-color: var(--color-cat-dziekanskie);           color: var(--color-cat-dziekanskie-text);}
+.event-tag--rektorskie            { background-color: var(--color-cat-rektorskie);            color: var(--color-cat-rektorskie-text);}
+.event-tag--wydarzenieuczelniane  { background-color: var(--color-cat-wydarzenieuczelniane);  color: var(--color-cat-wydarzenieuczelniane-text);}
+.event-tag--innewydarzenie        { background-color: var(--color-cat-innewydarzenie);        color: var(--color-cat-innewydarzenie-text);}
 
 
 
@@ -240,13 +237,13 @@
   flex-shrink: 0;
 }
 
-.legend-dot--kolokwium   { background-color: var(--color-cat-kolokwium); }
-.legend-dot--egzamin     { background-color: var(--color-cat-egzamin); }
-.legend-dot--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); }
-.legend-dot--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); }
-.legend-dot--rektorskie     { background-color: var(--color-cat-rektorskie); }
-.legend-dot--dziekanskie    { background-color: var(--color-cat-dziekanskie); }
-.legend-dot--innewydarzenie { background-color: var(--color-cat-innewydarzenie); }
+.legend-dot--kolokwium   { background-color: var(--color-cat-kolokwium);                          color: var(--color-cat-kolokwium-text);}
+.legend-dot--egzamin     { background-color: var(--color-cat-egzamin);                            color: var(--color-cat-egzamin-text);}
+.legend-dot--innezaliczenie     { background-color: var(--color-cat-innezaliczenie);              color: var(--color-cat-innezaliczenie-text);}
+.legend-dot--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane);  color: var(--color-cat-wydarzenieuczelniane-text);}
+.legend-dot--rektorskie     { background-color: var(--color-cat-rektorskie);                      color: var(--color-cat-rektorskie-text);}
+.legend-dot--dziekanskie    { background-color: var(--color-cat-dziekanskie);                     color: var(--color-cat-dziekanskie-text);}
+.legend-dot--innewydarzenie { background-color: var(--color-cat-innewydarzenie);                  color: var(--color-cat-innewydarzenie-text);}
 
 
 /* ============================================================
@@ -490,13 +487,13 @@
   filter: brightness(1.12);
 }
 
-.form-kat-btn--kolokwium   { background-color: var(--color-cat-kolokwium); color: var(--color-text-on-light); }
-.form-kat-btn--egzamin     { background-color: var(--color-cat-egzamin); }
-.form-kat-btn--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); }
-.form-kat-btn--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); }
-.form-kat-btn--rektorskie  { background-color: var(--color-cat-rektorskie); }
-.form-kat-btn--dziekanskie { background-color: var(--color-cat-dziekanskie); }
-.form-kat-btn--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); }
+.form-kat-btn--kolokwium   { background-color: var(--color-cat-kolokwium); color: var(--color-cat-kolokwium-text); }
+.form-kat-btn--egzamin     { background-color: var(--color-cat-egzamin); color: var(--color-cat-egzamin-text);}
+.form-kat-btn--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); color: var(--color-cat-innezaliczenie-text);}
+.form-kat-btn--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); color: var(--color-cat-wydarzenieuczelniane-text);}
+.form-kat-btn--rektorskie  { background-color: var(--color-cat-rektorskie); color: var(--color-cat-rektorskie-text);}
+.form-kat-btn--dziekanskie { background-color: var(--color-cat-dziekanskie); color: var(--color-cat-dziekanskie-text);}
+.form-kat-btn--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); color: var(--color-cat-innewydarzenie-text);}
 
 /* Category banner shown after category is chosen */
 .form-kat-banner {
@@ -510,13 +507,13 @@
   letter-spacing: 0.06em;
 }
 
-.form-kat-banner--kolokwium   { background-color: var(--color-cat-kolokwium); color: var(--color-text-on-light); }
-.form-kat-banner--egzamin     { background-color: var(--color-cat-egzamin); }
-.form-kat-banner--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); }
-.form-kat-banner--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); }
-.form-kat-banner--rektorskie  { background-color: var(--color-cat-rektorskie); }
-.form-kat-banner--dziekanskie { background-color: var(--color-cat-dziekanskie); }
-.form-kat-banner--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); }
+.form-kat-banner--kolokwium   { background-color: var(--color-cat-kolokwium); color: var(--color-cat-kolokwium-text); }
+.form-kat-banner--egzamin     { background-color: var(--color-cat-egzamin); color: var(--color-cat-egzamin-text); }
+.form-kat-banner--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); color: var(--color-cat-innezaliczenie-text); }
+.form-kat-banner--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); color: var(--color-cat-wydarzenieuczelniane-text); }
+.form-kat-banner--rektorskie  { background-color: var(--color-cat-rektorskie); color: var(--color-cat-rektorskie-text); }
+.form-kat-banner--dziekanskie { background-color: var(--color-cat-dziekanskie); color: var(--color-cat-dziekanskie-text); }
+.form-kat-banner--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); color: var(--color-cat-innewydarzenie-text); }
 
 /* Time row — two inputs side by side */
 .event-form__time-row {
@@ -658,13 +655,13 @@
   flex-shrink: 0;
 }
 
-.event-list__dot--kolokwium   { background-color: var(--color-cat-kolokwium); }
-.event-list__dot--egzamin     { background-color: var(--color-cat-egzamin); }
-.event-list__dot--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); }
-.event-list__dot--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); }
-.event-list__dot--rektorskie  { background-color: var(--color-cat-rektorskie); }
-.event-list__dot--dziekanskie { background-color: var(--color-cat-dziekanskie); }
-.event-list__dot--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); }
+.event-list__dot--kolokwium   { background-color: var(--color-cat-kolokwium); color: var(--color-cat-kolokwium-text);}
+.event-list__dot--egzamin     { background-color: var(--color-cat-egzamin); color: var(--color-cat-egzamin-text);}
+.event-list__dot--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); color: var(--color-cat-innezaliczenie-text);}
+.event-list__dot--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); color: var(--color-cat-wydarzenieuczelniane-text);}
+.event-list__dot--rektorskie  { background-color: var(--color-cat-rektorskie); color: var(--color-cat-rektorskie-text);}
+.event-list__dot--dziekanskie { background-color: var(--color-cat-dziekanskie); color: var(--color-cat-dziekanskie-text);}
+.event-list__dot--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); color: var(--color-cat-innewydarzenie-text);}
 
 
 /* ============================================================
@@ -844,13 +841,13 @@
   color: #ffffff;
 }
 
-.popover-header--kolokwium   { background-color: var(--color-cat-kolokwium); color: rgba(0,0,0,0.75); }
-.popover-header--egzamin     { background-color: var(--color-cat-egzamin); }
-.popover-header--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); }
-.popover-header--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); }
-.popover-header--rektorskie  { background-color: var(--color-cat-rektorskie); }
-.popover-header--dziekanskie { background-color: var(--color-cat-dziekanskie); }
-.popover-header--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); }
+.popover-header--kolokwium   { background-color: var(--color-cat-kolokwium); color: var(--color-cat-kolokwium-text); }
+.popover-header--egzamin     { background-color: var(--color-cat-egzamin); color: var(--color-cat-egzamin-text); }
+.popover-header--innezaliczenie     { background-color: var(--color-cat-innezaliczenie); color: var(--color-cat-innezaliczenie-text); }
+.popover-header--wydarzenieuczelniane     { background-color: var(--color-cat-wydarzenieuczelniane); color: var(--color-cat-wydarzenieuczelniane-text); }
+.popover-header--rektorskie  { background-color: var(--color-cat-rektorskie); color: var(--color-cat-rektorskie-text); }
+.popover-header--dziekanskie { background-color: var(--color-cat-dziekanskie); color: var(--color-cat-dziekanskie-text); }
+.popover-header--innewydarzenie        { background-color: var(--color-cat-innewydarzenie); color: var(--color-cat-innewydarzenie-text); }
 
 /* Body */
 .popover-body {

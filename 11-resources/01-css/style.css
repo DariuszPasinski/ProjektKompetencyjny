@@ -53,6 +53,13 @@
   --color-cat-rektorskie:           #7cc142;
   --color-cat-dziekanskie:          #276221;
   --color-cat-innewydarzenie:       #26c6da;
+  --color-cat-kolokwium-text:            black;
+  --color-cat-egzamin-text:              black;
+  --color-cat-innezaliczenie-text:       black;
+  --color-cat-wydarzenieuczelniane-text: black;
+  --color-cat-rektorskie-text:           black;
+  --color-cat-dziekanskie-text:          black;
+  --color-cat-innewydarzenie-text:       black;
 
   /* Legend */
   --color-legend-bg:     #f5f5f5;
